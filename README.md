@@ -1,0 +1,44 @@
+Roadmap Website Desa v1.0:
+- Beranda:
+  - TopNav -> logo, jadwal layanan
+  - Menu Navigasi
+  - Ticker Pengumuman
+  - Banner
+  - Akses Cepat Informasi Layanan
+  - Data Desa
+  - Agenda
+  - Berita Terkini
+  - Galeri Foto Kegiatan (Headline)
+  - Footer:
+    - Informasi Kontak
+    - Menu Cepat
+    - FAQ
+    - Icon Medsos
+    - Copyright
+- Halaman:
+  - Profil Desa:
+    - Tentang Desa
+    - Sejarah Desa
+    - Visi & Misi
+    - Struktur Organisasi
+    - Potensi Desa
+  - Informasi:
+    - Berita Desa
+    - Pengumuman
+    - Jadwal Pelayanan (informasi)
+    - Dokumen Publik (unduh)
+  - Layanan (keterangan, informasi prosedur, dll):
+    - Permohonan Surat Keterangan #1
+    - Permohonan Surat Keterangan #2
+  - Transparansi:
+    - APBDes
+    - Laporan Kegiatan
+  - Galeri:
+    - Foto
+    - Video
+  - Kontak & Aduan:
+    - Form Kontak
+    - Lokasi & Peta Desa
+- Bahasa:
+  - Indonesia
+  - Sunda
