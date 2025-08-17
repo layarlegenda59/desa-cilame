@@ -20,16 +20,55 @@ import {
 
 export default function InformasiPage() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('semua')
+  const [selectedCategory, setSelectedCategory] =
+    useState<InfoCategoryId>('semua')
   const { t } = useLanguage()
 
-  const categories = [
-    { id: 'semua', label: 'Semua' },
-    { id: 'pengumuman', label: 'Pengumuman' },
-    { id: 'berita', label: 'Berita' },
-    { id: 'jadwal', label: 'Jadwal Layanan' },
-    { id: 'dokumen', label: 'Dokumen Publik' },
-  ]
+  // Grab the exact key type your `t` accepts (your LocaleKeys)
+  type TKey = Parameters<typeof t>[0]
+
+  // 1) Enumerate the categories used on THIS page
+  //    ⬇️ Replace with your real ids if different
+  const INFO_CATEGORY_VALUES = [
+    'semua', // all
+    'pengumuman',
+    'kegiatan',
+    'layanan',
+    'pemberitahuan',
+  ] as const
+  type InfoCategoryId = (typeof INFO_CATEGORY_VALUES)[number]
+
+  // 2) Map category -> label key (for the <select> list)
+  const infoLabelKeyByCategory: Record<InfoCategoryId, TKey> = {
+    semua: 'info.all_categories' as TKey,
+    pengumuman: 'info.pengumuman' as TKey,
+    kegiatan: 'info.kegiatan' as TKey,
+    layanan: 'info.layanan' as TKey,
+    pemberitahuan: 'info.pemberitahuan' as TKey,
+  }
+
+  // 3) Map category -> header/title key
+  const infoHeaderKeyByCategory: Record<InfoCategoryId, TKey> = {
+    semua: 'info.latest_info' as TKey,
+    pengumuman: 'info.pengumuman' as TKey,
+    kegiatan: 'info.kegiatan' as TKey,
+    layanan: 'info.layanan' as TKey,
+    pemberitahuan: 'info.pemberitahuan' as TKey,
+  }
+
+  const categories: { id: InfoCategoryId; label: string }[] =
+    INFO_CATEGORY_VALUES.map((id) => ({
+      id,
+      label: t(infoLabelKeyByCategory[id]),
+    }))
+
+  // const categories = [
+  //   { id: 'semua', label: 'Semua' },
+  //   { id: 'pengumuman', label: 'Pengumuman' },
+  //   { id: 'berita', label: 'Berita' },
+  //   { id: 'jadwal', label: 'Jadwal Layanan' },
+  //   { id: 'dokumen', label: 'Dokumen Publik' },
+  // ]
 
   const announcements = [
     {
@@ -178,7 +217,9 @@ export default function InformasiPage() {
               <Filter className="h-4 w-4 text-gray-600" />
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setSelectedCategory(e.currentTarget.value as InfoCategoryId)
+                }
                 className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 {categories.map((category) => (
@@ -186,11 +227,7 @@ export default function InformasiPage() {
                     key={category.id}
                     value={category.id}
                   >
-                    {t(
-                      `info.${
-                        category.id === 'semua' ? 'all_categories' : category.id
-                      }`
-                    )}
+                    {category.label}
                   </option>
                 ))}
               </select>
@@ -205,15 +242,7 @@ export default function InformasiPage() {
             {filteredAnnouncements.length > 0 && (
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  {selectedCategory === 'semua'
-                    ? t('info.latest_info')
-                    : t(
-                        `info.${
-                          selectedCategory === 'semua'
-                            ? 'latest_info'
-                            : selectedCategory
-                        }`
-                      )}
+                  {t(infoHeaderKeyByCategory[selectedCategory])}
                 </h2>
 
                 <div className="space-y-6 container-responsive">

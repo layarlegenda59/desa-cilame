@@ -23,20 +23,58 @@ import {
 
 export default function UMKMPage() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('semua')
+  const [selectedCategory, setSelectedCategory] =
+    useState<UmkmCategoryId>('semua')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const { t } = useLanguage()
 
-  const categories = [
-    { id: 'semua', label: t('umkm.all_categories') },
-    { id: 'kuliner', label: t('umkm.culinary') },
-    { id: 'fashion', label: t('umkm.fashion') },
-    { id: 'kerajinan', label: t('umkm.handicraft') },
-    { id: 'pertanian', label: t('umkm.agriculture') },
-    { id: 'jasa', label: t('umkm.services') },
-    { id: 'elektronik', label: t('umkm.electronics') },
-    { id: 'kosmetik', label: t('umkm.beauty') },
+  type UmkmCategoryId =
+    | 'semua'
+    | 'kuliner'
+    | 'fashion'
+    | 'kerajinan'
+    | 'pertanian'
+    | 'jasa'
+    | 'elektronik'
+    | 'kosmetik'
+
+  type TKey = Parameters<typeof t>[0]
+
+  // Map each category to its translation key
+  const umkmKeyByCategory: Record<UmkmCategoryId, TKey> = {
+    semua: 'umkm.all_categories' as TKey,
+    kuliner: 'umkm.culinary' as TKey,
+    fashion: 'umkm.fashion' as TKey,
+    kerajinan: 'umkm.handicraft' as TKey,
+    pertanian: 'umkm.agriculture' as TKey,
+    jasa: 'umkm.services' as TKey,
+    elektronik: 'umkm.electronics' as TKey,
+    kosmetik: 'umkm.beauty' as TKey,
+  }
+
+  const tUmkm = (id: UmkmCategoryId) => t(umkmKeyByCategory[id])
+
+  const categories: { id: UmkmCategoryId; label: string }[] = [
+    { id: 'semua', label: tUmkm('semua') },
+    { id: 'kuliner', label: tUmkm('kuliner') },
+    { id: 'fashion', label: tUmkm('fashion') },
+    { id: 'kerajinan', label: tUmkm('kerajinan') },
+    { id: 'pertanian', label: tUmkm('pertanian') },
+    { id: 'jasa', label: tUmkm('jasa') },
+    { id: 'elektronik', label: tUmkm('elektronik') },
+    { id: 'kosmetik', label: tUmkm('kosmetik') },
   ]
+
+  // const categories = [
+  //   { id: 'semua', label: t('umkm.all_categories') },
+  //   { id: 'kuliner', label: t('umkm.culinary') },
+  //   { id: 'fashion', label: t('umkm.fashion') },
+  //   { id: 'kerajinan', label: t('umkm.handicraft') },
+  //   { id: 'pertanian', label: t('umkm.agriculture') },
+  //   { id: 'jasa', label: t('umkm.services') },
+  //   { id: 'elektronik', label: t('umkm.electronics') },
+  //   { id: 'kosmetik', label: t('umkm.beauty') },
+  // ]
 
   const umkmData = [
     {
@@ -294,7 +332,9 @@ export default function UMKMPage() {
 
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setSelectedCategory(e.currentTarget.value as UmkmCategoryId)
+              }
               className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               {categories.map((category) => (
@@ -373,7 +413,7 @@ export default function UMKMPage() {
                           {umkm.name}
                         </h3>
                         <p className="text-purple-600 text-sm font-medium">
-                          {t(`umkm.${umkm.category}`)}
+                          {tUmkm(umkm.category as UmkmCategoryId)}
                         </p>
                       </div>
                       <div className="flex items-center space-x-1">
@@ -461,7 +501,7 @@ export default function UMKMPage() {
           </h2>
           <p className="text-gray-600">
             {selectedCategory !== 'semua'
-              ? `${t('umkm.category')}: ${t(`umkm.${selectedCategory}`)}`
+              ? `${t('umkm.category')}: ${tUmkm(selectedCategory)}`
               : t('umkm.showing_all')}
           </p>
         </div>
@@ -501,7 +541,7 @@ export default function UMKMPage() {
                         {umkm.name}
                       </h3>
                       <p className="text-purple-600 text-sm">
-                        {t(`umkm.${umkm.category}`)}
+                        {tUmkm(umkm.category as UmkmCategoryId)}
                       </p>
                     </div>
                     <div className="flex items-center space-x-1">
@@ -571,7 +611,7 @@ export default function UMKMPage() {
                             {umkm.name}
                           </h3>
                           <p className="text-purple-600 font-medium">
-                            {t(`umkm.${umkm.category}`)}
+                            {tUmkm(umkm.category as UmkmCategoryId)}
                           </p>
                         </div>
                         <div className="flex items-center space-x-2">

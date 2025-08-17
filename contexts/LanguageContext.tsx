@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react'
 
-type Language = 'id' | 'su';
+type Language = 'id' | 'su'
 
 interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  language: Language
+  setLanguage: (lang: Language) => void
+  t: (key: LocaleKeys) => string
 }
 
 const translations = {
@@ -40,23 +40,26 @@ const translations = {
     'nav.online_letter_request': 'Ajukan Surat Online',
     'nav.job_market': 'Pasar Kerja',
     'nav.umkm': 'UMKM',
-    'nav.transparency': 'Transparansi',
     'nav.contact': 'Kontak',
     'nav.login': 'Login',
-    
+
     // Hero Section
     'hero.welcome': 'Selamat Datang di Desa Cilame',
-    'hero.subtitle': 'Portal Digital untuk Pelayanan Masyarakat yang Lebih Baik',
+    'hero.subtitle':
+      'Portal Digital untuk Pelayanan Masyarakat yang Lebih Baik',
     'hero.transparency': 'Transparansi dan Akuntabilitas',
-    'hero.transparency_subtitle': 'Keterbukaan Informasi untuk Kepercayaan Masyarakat',
+    'hero.transparency_subtitle':
+      'Keterbukaan Informasi untuk Kepercayaan Masyarakat',
     'hero.umkm': 'Pemberdayaan UMKM Desa',
-    'hero.umkm_subtitle': 'Mendukung Ekonomi Lokal dan Kesejahteraan Masyarakat',
+    'hero.umkm_subtitle':
+      'Mendukung Ekonomi Lokal dan Kesejahteraan Masyarakat',
     'hero.online_services': 'Layanan Online',
     'hero.contact_us': 'Hubungi Kami',
-    
+
     // Quick Access
     'quick.title': 'Akses Cepat Layanan',
-    'quick.subtitle': 'Pilih layanan yang Anda butuhkan untuk menghemat waktu dan tenaga',
+    'quick.subtitle':
+      'Pilih layanan yang Anda butuhkan untuk menghemat waktu dan tenaga',
     'quick.online_letter': 'Surat Online',
     'quick.online_letter_desc': 'Buat surat keterangan dengan mudah',
     'quick.village_umkm': 'UMKM Desa',
@@ -73,10 +76,11 @@ const translations = {
     'quick.transparency_desc': 'Laporan keuangan desa',
     'quick.payment': 'Pembayaran',
     'quick.payment_desc': 'Bayar retribusi dan pajak',
-    
+
     // Stats Section
     'stats.title': 'Data Desa Cilame',
-    'stats.subtitle': 'Informasi statistik terkini tentang kondisi demografis dan ekonomi desa',
+    'stats.subtitle':
+      'Informasi statistik terkini tentang kondisi demografis dan ekonomi desa',
     'stats.total_population': 'Total Penduduk',
     'stats.population_subtitle': 'Jiwa terdaftar',
     'stats.family_heads': 'Kepala Keluarga',
@@ -85,16 +89,17 @@ const translations = {
     'stats.umkm_subtitle': 'Usaha lokal',
     'stats.growth': 'Pertumbuhan',
     'stats.growth_subtitle': 'Ekonomi tahun ini',
-    
+
     // News Section
     'news.title': 'Berita Terkini',
     'news.subtitle': 'Ikuti perkembangan terbaru dari Desa Cilame',
     'news.view_all': 'Lihat Semua Berita',
     'news.read_more': 'Baca Selengkapnya',
-    
+
     // Services
     'services.title': 'Layanan Digital Desa Cilame',
-    'services.subtitle': 'Nikmati berbagai layanan digital yang memudahkan kehidupan masyarakat desa',
+    'services.subtitle':
+      'Nikmati berbagai layanan digital yang memudahkan kehidupan masyarakat desa',
     'services.information_portal': 'Portal Informasi',
     'services.information_desc': 'Berita, pengumuman, dan jadwal layanan',
     'services.job_market': 'Pasar Tenaga Kerja',
@@ -103,10 +108,11 @@ const translations = {
     'services.umkm_desc': 'Toko online untuk produk lokal',
     'services.financial_transparency': 'Transparansi Keuangan',
     'services.financial_desc': 'Laporan APBDes dan realisasi',
-    
+
     // Contact Section
     'contact.title': 'Hubungi Desa Cilame',
-    'contact.subtitle': 'Kami siap melayani Anda dengan sepenuh hati. Jangan ragu untuk menghubungi kami untuk berbagai keperluan administrasi dan layanan desa.',
+    'contact.subtitle':
+      'Kami siap melayani Anda dengan sepenuh hati. Jangan ragu untuk menghubungi kami untuk berbagai keperluan administrasi dan layanan desa.',
     'contact.service_hours_title': 'JAM PELAYANAN DESA CILAME',
     'contact.service_days_title': 'Hari & Waktu Layanan',
     'contact.monday_thursday': 'Senin – Kamis',
@@ -116,27 +122,31 @@ const translations = {
     'contact.break_hours_title': 'Jam Istirahat',
     'contact.notes_title': 'Catatan',
     'contact.note_1': 'Datang lebih awal untuk menghindari antrean.',
-    'contact.note_2': 'Pastikan semua dokumen persyaratan sudah lengkap sebelum mengajukan pelayanan.',
+    'contact.note_2':
+      'Pastikan semua dokumen persyaratan sudah lengkap sebelum mengajukan pelayanan.',
     'contact.quick_message': 'Pesan Cepat',
     'contact.full_name': 'Nama Lengkap',
     'contact.email': 'Email',
     'contact.message': 'Pesan Anda',
     'contact.send_message': 'Kirim Pesan',
-    'contact.office_hours': 'Senin - Kamis: 08.00 - 16.00 | Jumat: 08.00 - 11.30 | Sabtu - Minggu dan Libur Nasional: Tutup',
-    
+    'contact.office_hours':
+      'Senin - Kamis: 08.00 - 16.00 | Jumat: 08.00 - 11.30 | Sabtu - Minggu dan Libur Nasional: Tutup',
+
     // Footer
-    'footer.description': 'Portal digital resmi Desa Cilame untuk melayani masyarakat dengan teknologi modern.',
+    'footer.description':
+      'Portal digital resmi Desa Cilame untuk melayani masyarakat dengan teknologi modern.',
     'footer.services': 'Layanan',
     'footer.help': 'Bantuan',
     'footer.guide': 'Panduan',
     'footer.faq': 'FAQ',
     'footer.follow_us': 'Ikuti Kami',
     'footer.copyright': '© 2025 Desa Cilame. Semua hak cipta dilindungi.',
-    
+
     // Chatbot
     'chatbot.title': 'Asisten Desa Cilame',
     'chatbot.status': 'Online • Siap membantu Anda',
-    'chatbot.greeting': 'Halo! Saya Asisten Virtual Desa Cilame. Ada yang bisa saya bantu?',
+    'chatbot.greeting':
+      'Halo! Saya Asisten Virtual Desa Cilame. Ada yang bisa saya bantu?',
     'chatbot.quick_questions': 'Pertanyaan umum:',
     'chatbot.letter_guide': 'Cara membuat surat keterangan',
     'chatbot.social_aid_info': 'Info bantuan sosial',
@@ -144,18 +154,24 @@ const translations = {
     'chatbot.village_contact': 'Kontak desa',
     'chatbot.whatsapp': 'Chat via WhatsApp',
     'chatbot.type_message': 'Ketik pesan...',
-    'chatbot.response': 'Terima kasih atas pertanyaan Anda. Tim kami akan segera membantu Anda.',
-    
+    'chatbot.response':
+      'Terima kasih atas pertanyaan Anda. Tim kami akan segera membantu Anda.',
+
     // Announcements
-    'announcement.social_aid': '🔔 Pendaftaran Bantuan Sosial PKH Tahap II dibuka hingga 31 Januari 2025',
-    'announcement.online_service': '📋 Pelayanan Surat Keterangan Online kini tersedia 24/7',
-    'announcement.market': '🏪 Pasar Rakyat Desa Cilame buka setiap Selasa dan Jumat',
-    'announcement.budget_report': '💰 Laporan APBDes Triwulan IV telah dipublikasikan',
+    'announcement.social_aid':
+      '🔔 Pendaftaran Bantuan Sosial PKH Tahap II dibuka hingga 31 Januari 2025',
+    'announcement.online_service':
+      '📋 Pelayanan Surat Keterangan Online kini tersedia 24/7',
+    'announcement.market':
+      '🏪 Pasar Rakyat Desa Cilame buka setiap Selasa dan Jumat',
+    'announcement.budget_report':
+      '💰 Laporan APBDes Triwulan IV telah dipublikasikan',
     'announcement.latest': 'Terbaru',
-    
+
     // Information Page
     'info.title': 'Portal Informasi Desa',
-    'info.subtitle': 'Akses informasi terkini, pengumuman resmi, jadwal layanan, dan dokumen publik Desa Cilame',
+    'info.subtitle':
+      'Akses informasi terkini, pengumuman resmi, jadwal layanan, dan dokumen publik Desa Cilame',
     'info.search_placeholder': 'Cari berita, pengumuman, atau dokumen...',
     'info.all_categories': 'Semua',
     'info.announcements': 'Pengumuman',
@@ -172,10 +188,11 @@ const translations = {
     'info.village_office': 'Desa: (022) 6867-8901',
     'info.download': 'Unduh',
     'info.no_results': 'Tidak ada informasi yang ditemukan',
-    
+
     // Job Market Page
     'job.title': 'Pasar Tenaga Kerja Lokal',
-    'job.subtitle': 'Temukan jasa dan pekerja terpercaya di Desa Cilame dengan sistem booking dan pembayaran yang aman',
+    'job.subtitle':
+      'Temukan jasa dan pekerja terpercaya di Desa Cilame dengan sistem booking dan pembayaran yang aman',
     'job.search_placeholder': 'Cari pekerja, jasa, atau keahlian...',
     'job.all_categories': 'Semua Kategori',
     'job.construction': 'Tukang & Konstruksi',
@@ -199,12 +216,14 @@ const translations = {
     'job.busy_until': 'Sibuk hingga Minggu',
     'job.no_workers': 'Tidak ada pekerja yang sesuai dengan pencarian Anda',
     'job.join_worker': 'Ingin Bergabung Sebagai Pekerja?',
-    'job.join_description': 'Daftarkan keahlian Anda dan dapatkan penghasilan tambahan dari jasa yang Anda tawarkan',
+    'job.join_description':
+      'Daftarkan keahlian Anda dan dapatkan penghasilan tambahan dari jasa yang Anda tawarkan',
     'job.register_worker': 'Daftar Sebagai Pekerja',
-    
+
     // UMKM Page
     'umkm.title': 'Direktori UMKM Desa Cilame',
-    'umkm.subtitle': 'Temukan dan dukung produk lokal berkualitas dari usaha mikro, kecil, dan menengah di Desa Cilame',
+    'umkm.subtitle':
+      'Temukan dan dukung produk lokal berkualitas dari usaha mikro, kecil, dan menengah di Desa Cilame',
     'umkm.search_placeholder': 'Cari UMKM, produk, atau layanan...',
     'umkm.all_categories': 'Semua Kategori',
     'umkm.culinary': 'Kuliner',
@@ -224,12 +243,14 @@ const translations = {
     'umkm.products_available': 'produk tersedia',
     'umkm.no_results': 'Tidak ada UMKM yang sesuai dengan pencarian Anda',
     'umkm.register_business': 'Ingin Mendaftarkan Usaha Anda?',
-    'umkm.register_description': 'Bergabunglah dengan direktori UMKM Desa Cilame dan jangkau lebih banyak pelanggan',
+    'umkm.register_description':
+      'Bergabunglah dengan direktori UMKM Desa Cilame dan jangkau lebih banyak pelanggan',
     'umkm.register_umkm': 'Daftar UMKM',
-    
+
     // Transparency Page
     'transparency.title': 'Transparansi Keuangan Desa',
-    'transparency.subtitle': 'Keterbukaan informasi keuangan dan pelaksanaan program pembangunan untuk kepercayaan masyarakat',
+    'transparency.subtitle':
+      'Keterbukaan informasi keuangan dan pelaksanaan program pembangunan untuk kepercayaan masyarakat',
     'transparency.year': 'Tahun:',
     'transparency.period': 'Periode:',
     'transparency.annual': 'Tahunan',
@@ -250,7 +271,8 @@ const translations = {
     'transparency.program_completed': 'Program telah selesai dilaksanakan',
     'transparency.program_ongoing': 'Program sedang dalam tahap pelaksanaan',
     'transparency.need_more_info': 'Butuh Informasi Lebih Lanjut?',
-    'transparency.contact_finance': 'Hubungi Bagian Keuangan Desa untuk penjelasan detail mengenai laporan keuangan',
+    'transparency.contact_finance':
+      'Hubungi Bagian Keuangan Desa untuk penjelasan detail mengenai laporan keuangan',
     'transparency.ask_question': 'Ajukan Pertanyaan',
     'transparency.schedule_consultation': 'Jadwalkan Konsultasi',
     'transparency.downloads': 'unduhan',
@@ -284,23 +306,26 @@ const translations = {
     'nav.online_letter_request': 'Ajukeun Surat Online',
     'nav.job_market': 'Pasar Pagawéan',
     'nav.umkm': 'UMKM',
-    'nav.transparency': 'Transparansi',
     'nav.contact': 'Kontak',
     'nav.login': 'Lebet',
-    
+
     // Hero Section
     'hero.welcome': 'Wilujeng Sumping ka Désa Cilame',
-    'hero.subtitle': 'Portal Digital pikeun Palayanan Masarakat anu Langkung Saé',
+    'hero.subtitle':
+      'Portal Digital pikeun Palayanan Masarakat anu Langkung Saé',
     'hero.transparency': 'Transparansi sareng Akuntabilitas',
-    'hero.transparency_subtitle': 'Kabuka Informasi pikeun Kapercayaan Masarakat',
+    'hero.transparency_subtitle':
+      'Kabuka Informasi pikeun Kapercayaan Masarakat',
     'hero.umkm': 'Pemberdayaan UMKM Désa',
-    'hero.umkm_subtitle': 'Ngadukung Ékonomi Lokal jeung Kasejahteraan Masarakat',
+    'hero.umkm_subtitle':
+      'Ngadukung Ékonomi Lokal jeung Kasejahteraan Masarakat',
     'hero.online_services': 'Palayanan Online',
     'hero.contact_us': 'Kontak Kami',
-    
+
     // Quick Access
     'quick.title': 'Aksés Gancang Palayanan',
-    'quick.subtitle': 'Pilih palayanan anu anjeun peryogikeun pikeun ngahémat waktos jeung tanaga',
+    'quick.subtitle':
+      'Pilih palayanan anu anjeun peryogikeun pikeun ngahémat waktos jeung tanaga',
     'quick.online_letter': 'Surat Online',
     'quick.online_letter_desc': 'Ngadamel surat katerangan kalayan gampang',
     'quick.village_umkm': 'UMKM Désa',
@@ -317,10 +342,11 @@ const translations = {
     'quick.transparency_desc': 'Laporan keuangan désa',
     'quick.payment': 'Pembayaran',
     'quick.payment_desc': 'Mayar retribusi jeung pajeg',
-    
+
     // Stats Section
     'stats.title': 'Data Désa Cilame',
-    'stats.subtitle': 'Informasi statistik panganyarna ngeunaan kaayaan démografis jeung ékonomi désa',
+    'stats.subtitle':
+      'Informasi statistik panganyarna ngeunaan kaayaan démografis jeung ékonomi désa',
     'stats.total_population': 'Total Penduduk',
     'stats.population_subtitle': 'Jiwa kadaptar',
     'stats.family_heads': 'Kapala Kulawarga',
@@ -329,16 +355,17 @@ const translations = {
     'stats.umkm_subtitle': 'Usaha lokal',
     'stats.growth': 'Pertumbuhan',
     'stats.growth_subtitle': 'Ékonomi taun ieu',
-    
+
     // News Section
     'news.title': 'Béja Panganyarna',
     'news.subtitle': 'Turutan kamekaran panganyarna ti Désa Cilame',
     'news.view_all': 'Tingali Sadaya Béja',
     'news.read_more': 'Baca Salengkapna',
-    
+
     // Services
     'services.title': 'Palayanan Digital Désa Cilame',
-    'services.subtitle': 'Ngarasakeun rupa-rupa palayanan digital anu ngagampangkeun kahirupan masarakat désa',
+    'services.subtitle':
+      'Ngarasakeun rupa-rupa palayanan digital anu ngagampangkeun kahirupan masarakat désa',
     'services.information_portal': 'Portal Informasi',
     'services.information_desc': 'Béja, pengumuman, jeung jadwal palayanan',
     'services.job_market': 'Pasar Tenaga Pagawéan',
@@ -347,10 +374,11 @@ const translations = {
     'services.umkm_desc': 'Toko online pikeun produk lokal',
     'services.financial_transparency': 'Transparansi Keuangan',
     'services.financial_desc': 'Laporan APBDes jeung realisasi',
-    
+
     // Contact Section
     'contact.title': 'Kontak Désa Cilame',
-    'contact.subtitle': 'Kami siap ngalayanan anjeun kalayan sapenuh ati. Ulah ragu pikeun ngahubungi kami pikeun rupa-rupa kaperluan administrasi jeung palayanan désa.',
+    'contact.subtitle':
+      'Kami siap ngalayanan anjeun kalayan sapenuh ati. Ulah ragu pikeun ngahubungi kami pikeun rupa-rupa kaperluan administrasi jeung palayanan désa.',
     'contact.service_hours_title': 'JAM PALAYANAN DESA CILAME',
     'contact.service_days_title': 'Poé & Waktos Palayanan',
     'contact.monday_thursday': 'Senén – Kemis',
@@ -360,27 +388,31 @@ const translations = {
     'contact.break_hours_title': 'Jam Istirahat',
     'contact.notes_title': 'Catetan',
     'contact.note_1': 'Datang leuwih awal pikeun ngahindarkeun antrian.',
-    'contact.note_2': 'Pastikan sadaya dokumén sarat geus lengkep sateuacan ngajukeun palayanan.',
+    'contact.note_2':
+      'Pastikan sadaya dokumén sarat geus lengkep sateuacan ngajukeun palayanan.',
     'contact.quick_message': 'Pesen Gancang',
     'contact.full_name': 'Nami Lengkep',
     'contact.email': 'Email',
     'contact.message': 'Pesen Anjeun',
     'contact.send_message': 'Kirim Pesen',
-    'contact.office_hours': 'Senén - Kemis: 08.00 - 16.00 | Jumaah: 08.00 - 11.30 | Saptu - Minggu jeung Libur Nasional: Tutup',
-    
+    'contact.office_hours':
+      'Senén - Kemis: 08.00 - 16.00 | Jumaah: 08.00 - 11.30 | Saptu - Minggu jeung Libur Nasional: Tutup',
+
     // Footer
-    'footer.description': 'Portal digital resmi Désa Cilame pikeun ngalayanan masarakat kalayan téknologi modéren.',
+    'footer.description':
+      'Portal digital resmi Désa Cilame pikeun ngalayanan masarakat kalayan téknologi modéren.',
     'footer.services': 'Palayanan',
     'footer.help': 'Bantuan',
     'footer.guide': 'Panduan',
     'footer.faq': 'FAQ',
     'footer.follow_us': 'Turutan Kami',
     'footer.copyright': '© 2025 Désa Cilame. Sadaya hak cipta dilindungi.',
-    
+
     // Chatbot
     'chatbot.title': 'Asistén Désa Cilame',
     'chatbot.status': 'Online • Siap ngabantosan anjeun',
-    'chatbot.greeting': 'Halo! Abdi Asistén Virtual Désa Cilame. Aya anu tiasa abdi bantosan?',
+    'chatbot.greeting':
+      'Halo! Abdi Asistén Virtual Désa Cilame. Aya anu tiasa abdi bantosan?',
     'chatbot.quick_questions': 'Patarosan umum:',
     'chatbot.letter_guide': 'Cara ngadamel surat katerangan',
     'chatbot.social_aid_info': 'Info bantuan sosial',
@@ -388,18 +420,24 @@ const translations = {
     'chatbot.village_contact': 'Kontak désa',
     'chatbot.whatsapp': 'Chat via WhatsApp',
     'chatbot.type_message': 'Ketik pesen...',
-    'chatbot.response': 'Hatur nuhun kana patarosan anjeun. Tim kami bakal geura-giru ngabantosan anjeun.',
-    
+    'chatbot.response':
+      'Hatur nuhun kana patarosan anjeun. Tim kami bakal geura-giru ngabantosan anjeun.',
+
     // Announcements
-    'announcement.social_aid': '🔔 Pendaptaran Bantuan Sosial PKH Tahap II dibuka dugi ka 31 Januari 2025',
-    'announcement.online_service': '📋 Palayanan Surat Katerangan Online ayeuna sayaga 24/7',
-    'announcement.market': '🏪 Pasar Rakyat Désa Cilame buka unggal Salasa jeung Jumaah',
-    'announcement.budget_report': '💰 Laporan APBDes Triwulan IV parantos dipublikasi',
+    'announcement.social_aid':
+      '🔔 Pendaptaran Bantuan Sosial PKH Tahap II dibuka dugi ka 31 Januari 2025',
+    'announcement.online_service':
+      '📋 Palayanan Surat Katerangan Online ayeuna sayaga 24/7',
+    'announcement.market':
+      '🏪 Pasar Rakyat Désa Cilame buka unggal Salasa jeung Jumaah',
+    'announcement.budget_report':
+      '💰 Laporan APBDes Triwulan IV parantos dipublikasi',
     'announcement.latest': 'Panganyarna',
-    
+
     // Information Page
     'info.title': 'Portal Informasi Désa',
-    'info.subtitle': 'Aksés informasi panganyarna, pengumuman resmi, jadwal palayanan, jeung dokumén publik Désa Cilame',
+    'info.subtitle':
+      'Aksés informasi panganyarna, pengumuman resmi, jadwal palayanan, jeung dokumén publik Désa Cilame',
     'info.search_placeholder': 'Néangan béja, pengumuman, atanapi dokumén...',
     'info.all_categories': 'Sadayana',
     'info.announcements': 'Pengumuman',
@@ -416,10 +454,11 @@ const translations = {
     'info.village_office': 'Désa: (022) 6867-8901',
     'info.download': 'Unduh',
     'info.no_results': 'Teu aya informasi anu kapanggih',
-    
+
     // Job Market Page
     'job.title': 'Pasar Tenaga Pagawéan Lokal',
-    'job.subtitle': 'Panggihan jasa jeung pagawé dipercaya di Désa Cilame kalayan sistem booking jeung pembayaran anu aman',
+    'job.subtitle':
+      'Panggihan jasa jeung pagawé dipercaya di Désa Cilame kalayan sistem booking jeung pembayaran anu aman',
     'job.search_placeholder': 'Néangan pagawé, jasa, atanapi kaahlian...',
     'job.all_categories': 'Sadaya Kategori',
     'job.construction': 'Tukang jeung Konstruksi',
@@ -443,12 +482,14 @@ const translations = {
     'job.busy_until': 'Sibuk dugi ka Minggu',
     'job.no_workers': 'Teu aya pagawé anu cocog jeung panéangan anjeun',
     'job.join_worker': 'Hoyong Gabung Janten Pagawé?',
-    'job.join_description': 'Daptarkeun kaahlian anjeun jeung kéngingkeun panghasilan tambahan ti jasa anu anjeun tawarkeun',
+    'job.join_description':
+      'Daptarkeun kaahlian anjeun jeung kéngingkeun panghasilan tambahan ti jasa anu anjeun tawarkeun',
     'job.register_worker': 'Daptar Janten Pagawé',
-    
+
     // UMKM Page
     'umkm.title': 'Direktori UMKM Désa Cilame',
-    'umkm.subtitle': 'Panggihan jeung dukung produk lokal berkualitas ti usaha mikro, alit, jeung sedeng di Désa Cilame',
+    'umkm.subtitle':
+      'Panggihan jeung dukung produk lokal berkualitas ti usaha mikro, alit, jeung sedeng di Désa Cilame',
     'umkm.search_placeholder': 'Néangan UMKM, produk, atanapi palayanan...',
     'umkm.all_categories': 'Sadaya Kategori',
     'umkm.culinary': 'Kuliner',
@@ -468,12 +509,14 @@ const translations = {
     'umkm.products_available': 'produk sayaga',
     'umkm.no_results': 'Teu aya UMKM anu cocog jeung panéangan anjeun',
     'umkm.register_business': 'Hoyong Ngadaptarkeun Usaha Anjeun?',
-    'umkm.register_description': 'Gabung jeung direktori UMKM Désa Cilame jeung jangkauan langkung seueur palanggan',
+    'umkm.register_description':
+      'Gabung jeung direktori UMKM Désa Cilame jeung jangkauan langkung seueur palanggan',
     'umkm.register_umkm': 'Daptar UMKM',
-    
+
     // Transparency Page
     'transparency.title': 'Transparansi Keuangan Désa',
-    'transparency.subtitle': 'Kabuka informasi keuangan jeung palaksanaan program pangwangunan pikeun kapercayaan masarakat',
+    'transparency.subtitle':
+      'Kabuka informasi keuangan jeung palaksanaan program pangwangunan pikeun kapercayaan masarakat',
     'transparency.year': 'Taun:',
     'transparency.period': 'Période:',
     'transparency.annual': 'Taunan',
@@ -494,11 +537,12 @@ const translations = {
     'transparency.program_completed': 'Program parantos réngsé dilaksanakeun',
     'transparency.program_ongoing': 'Program nuju dina tahap palaksanaan',
     'transparency.need_more_info': 'Peryogi Informasi Langkung Lengkep?',
-    'transparency.contact_finance': 'Kontak Bagian Keuangan Désa pikeun panjelasan detil ngeunaan laporan keuangan',
+    'transparency.contact_finance':
+      'Kontak Bagian Keuangan Désa pikeun panjelasan detil ngeunaan laporan keuangan',
     'transparency.ask_question': 'Ajukan Patarosan',
     'transparency.schedule_consultation': 'Jadwalkeun Konsultasi',
     'transparency.downloads': 'unduhan',
-    
+
     // Additional UI Elements
     'ui.view_details': 'Tingali Detil',
     'ui.send': 'Kirim',
@@ -794,7 +838,6 @@ const translations = {
     'ui.specifically': 'Husus',
     'ui.exactly': 'Persis',
     'ui.approximately': 'Kira-kira',
-    'ui.about': 'Ngeunaan',
     'ui.around': 'Sakitar',
     'ui.nearly': 'Ampir',
     'ui.almost': 'Ampir',
@@ -869,7 +912,6 @@ const translations = {
     'ui.around_preposition': 'Sabudeureun',
     'ui.near': 'Deukeut',
     'ui.far': 'Jauh',
-    'ui.close': 'Deukeut',
     'ui.distant': 'Jauh',
     'ui.here': 'Di dieu',
     'ui.there': 'Di dinya',
@@ -975,7 +1017,6 @@ const translations = {
     'ui.complex': 'Rumit',
     'ui.complicated': 'Rumit',
     'ui.straightforward': 'Langsung',
-    'ui.clear': 'Jelas',
     'ui.unclear': 'Teu jelas',
     'ui.obvious': 'Jelas',
     'ui.hidden': 'Disumputkeun',
@@ -1414,7 +1455,6 @@ const translations = {
     'ui.effort': 'Usaha',
     'ui.attempt': 'Usaha',
     'ui.try_noun': 'Usaha',
-    'ui.success': 'Kasuksésan',
     'ui.failure': 'Kagagalan',
     'ui.achievement': 'Prestasi',
     'ui.accomplishment': 'Pencapaian',
@@ -1453,7 +1493,6 @@ const translations = {
     'ui.fine': 'Denda',
     'ui.fee_noun': 'Biaya',
     'ui.cost_noun': 'Biaya',
-    'ui.expense': 'Pengeluaran',
     'ui.payment': 'Pembayaran',
     'ui.salary': 'Gaji',
     'ui.wage': 'Upah',
@@ -1604,7 +1643,6 @@ const translations = {
     'ui.neighborhood': 'Lingkungan',
     'ui.community': 'Komunitas',
     'ui.society': 'Masarakat',
-    'ui.public': 'Masarakat',
     'ui.people': 'Jalma',
     'ui.person': 'Jalma',
     'ui.individual': 'Individu',
@@ -1664,7 +1702,6 @@ const translations = {
     'ui.circumference': 'Keliling',
     'ui.perimeter': 'Keliling',
     'ui.area_measurement': 'Luas',
-    'ui.volume': 'Volume',
     'ui.capacity_measurement': 'Kapasitas',
     'ui.weight': 'Beurat',
     'ui.mass': 'Massa',
@@ -1704,7 +1741,6 @@ const translations = {
     'ui.array': 'Array',
     'ui.table_noun': 'Tabel',
     'ui.database': 'Basis data',
-    'ui.record': 'Rékam',
     'ui.entry': 'Éntri',
     'ui.item': 'Item',
     'ui.element': 'Elemen',
@@ -1783,7 +1819,6 @@ const translations = {
     'ui.property_noun': 'Harta',
     'ui.possession': 'Milik',
     'ui.ownership': 'Kapamilikan',
-    'ui.right': 'Hak',
     'ui.privilege': 'Hak istimewa',
     'ui.authority': 'Otoritas',
     'ui.responsibility': 'Tanggung jawab',
@@ -1847,11 +1882,9 @@ const translations = {
     'ui.situation_noun': 'Situasi',
     'ui.condition_noun': 'Kaayaan',
     'ui.state': 'Kaayaan',
-    'ui.mode': 'Mode',
     'ui.phase_noun': 'Fase',
     'ui.stage': 'Tahap',
     'ui.step': 'Léngkah',
-    'ui.move': 'Gerak',
     'ui.action': 'Aksi',
     'ui.activity': 'Kagiatan',
     'ui.task': 'Tugas',
@@ -1906,13 +1939,10 @@ const translations = {
     'ui.class_noun': 'Kelas',
     'ui.category': 'Kategori',
     'ui.type': 'Jenis',
-    'ui.kind': 'Jenis',
-    'ui.sort': 'Jenis',
     'ui.variety': 'Variétas',
     'ui.diversity': 'Karagaman',
     'ui.difference': 'Bédana',
     'ui.distinction': 'Bédana',
-    'ui.contrast': 'Kontras',
     'ui.comparison': 'Perbandingan',
     'ui.similarity': 'Kasaruaan',
     'ui.resemblance': 'Kasaruaan',
@@ -1922,7 +1952,6 @@ const translations = {
     'ui.suitability': 'Kasesuaian',
     'ui.compatibility': 'Kompatibilitas',
     'ui.harmony': 'Harmoni',
-    'ui.balance': 'Kasaimbangan',
     'ui.equilibrium': 'Kasaimbangan',
     'ui.stability': 'Stabilitas',
     'ui.consistency': 'Konsistensi',
@@ -1931,7 +1960,6 @@ const translations = {
     'ui.trustworthiness': 'Kapercayaan',
     'ui.credibility': 'Kredibilitas',
     'ui.reputation': 'Reputasi',
-    'ui.image': 'Citra',
     'ui.impression': 'Kesan',
     'ui.perception': 'Persépsi',
     'ui.understanding': 'Pamahaman',
@@ -1998,7 +2026,6 @@ const translations = {
     'ui.proclamation': 'Proklamasi',
     'ui.statement_noun': 'Pernyataan',
     'ui.report_noun': 'Laporan',
-    'ui.account': 'Akun',
     'ui.record_noun': 'Catetan',
     'ui.log': 'Log',
     'ui.journal': 'Jurnal',
@@ -2057,16 +2084,13 @@ const translations = {
     'ui.asset_noun': 'Aset',
     'ui.liability': 'Kewajiban',
     'ui.equity': 'Ekuitas',
-    'ui.share': 'Saham',
     'ui.stock': 'Saham',
     'ui.bond': 'Obligasi',
-    'ui.security': 'Sekuritas',
     'ui.portfolio': 'Portofolio',
     'ui.return': 'Hasil',
     'ui.yield': 'Hasil',
     'ui.dividend': 'Dividen',
     'ui.interest_money': 'Bunga',
-    'ui.rate': 'Laju',
     'ui.percentage_noun': 'Perséntase',
     'ui.ratio_noun': 'Rasio',
     'ui.proportion_noun': 'Proporsi',
@@ -2110,7 +2134,6 @@ const translations = {
     'ui.tangent': 'Tangen',
     'ui.derivative': 'Turunan',
     'ui.integral': 'Integral',
-    'ui.limit': 'Wates',
     'ui.infinity': 'Takterhingga',
     'ui.zero': 'Nol',
     'ui.one': 'Hiji',
@@ -2127,35 +2150,56 @@ const translations = {
     'ui.thousand': 'Sarébu',
     'ui.million': 'Sajuta',
     'ui.billion': 'Samilyar',
-    'ui.trillion': 'Satriliun'
-  }
-};
+    'ui.trillion': 'Satriliun',
+  },
+} as const
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined
+)
+
+type LocaleKeys = keyof (typeof translations)['id'] // strict union of all keys
+type Translations = Record<Language, Record<LocaleKeys, string>>
+
+// Re-type with strict shape (helps catch missing keys across locales)
+const typedTranslations: Translations = translations
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('id');
+  const [language, setLanguage] = useState<Language>('id')
 
-  const t = (key: string): string => {
-    const translation = translations[language][key];
+  function t<K extends LocaleKeys>(key: K): string {
+    const translation = typedTranslations[language][key]
     if (!translation) {
-      console.warn(`Translation missing for key: ${key} in language: ${language}`);
-      return key;
+      console.warn(
+        `Translation missing for key: ${key} in language: ${language}`
+      )
+      return String(key)
     }
-    return translation;
-  };
+    return translation
+  }
+
+  // const t = (key: string): string => {
+  //   const translation = translations[language][key]
+  //   if (!translation) {
+  //     console.warn(
+  //       `Translation missing for key: ${key} in language: ${language}`
+  //     )
+  //     return key
+  //   }
+  //   return translation
+  // }
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
-  );
+  )
 }
 
 export function useLanguage() {
-  const context = useContext(LanguageContext);
+  const context = useContext(LanguageContext)
   if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    throw new Error('useLanguage must be used within a LanguageProvider')
   }
-  return context;
+  return context
 }
