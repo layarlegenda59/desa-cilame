@@ -31,7 +31,6 @@ type ApiResponse = {
 
 async function getNewsDetail(slug: string): Promise<NewsItem> {
   const res = await fetch(`http://localhost:8080/api/v1/news/${slug}`)
-
   const json = (await res.json()) as ApiResponse
   const code = json?.http?.code ?? 200
 
