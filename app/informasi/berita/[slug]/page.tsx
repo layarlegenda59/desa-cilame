@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 export const dynamic = 'force-dynamic'
 
 type Props = { params: { slug: string } }
@@ -30,11 +32,18 @@ type ApiResponse = {
 async function getNewsDetail(slug: string): Promise<NewsItem> {
   const res = await fetch(`http://localhost:8080/api/v1/news/${slug}`)
 
-  if (!res.ok) {
-    throw new Error(`failed to fetch news: ${res.status}`)
+  const json = (await res.json()) as ApiResponse
+  const code = json?.http?.code ?? 200
+
+  if (code === 404 || code === 410 || code === 500) {
+    notFound()
   }
 
-  const json = (await res.json()) as ApiResponse
+  if (code !== 200) {
+    const err = new Error(`API_${code}:${json?.http?.message ?? 'Error'}`)
+    throw err
+  }
+
   return json.result
 }
 

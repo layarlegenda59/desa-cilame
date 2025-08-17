@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
@@ -29,12 +30,17 @@ type ApiResponse = {
 
 async function getNews(): Promise<NewsItem[]> {
   const res = await fetch('http://localhost:8080/api/v1/news')
+  const json = (await res.json()) as ApiResponse
+  const code = json?.http?.code ?? 200
 
-  if (!res.ok) {
-    throw new Error(`failed to fetch news: ${res.status}`)
+  if (json.http.code === 200) {
+    return Array.isArray(json.result) ? json.result : []
   }
 
-  const json = (await res.json()) as ApiResponse
+  if (json.http.code === 204) {
+    return []
+  }
+
   return json.result
 }
 
