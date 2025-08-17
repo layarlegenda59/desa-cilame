@@ -14,6 +14,8 @@ FROM node:20-alpine AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN [ -d public ] || mkdir -p public
+
 # Make sure next.config.js has: output: 'standalone'
 RUN npm run build
 
