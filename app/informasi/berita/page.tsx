@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { apiURL } from '@/lib/api'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,7 +30,7 @@ type ApiResponse = {
 }
 
 async function getNews(): Promise<NewsItem[]> {
-  const res = await fetch('/api/v1/news')
+  const res = await fetch(apiURL('/api/v1/news'))
   const json = (await res.json()) as ApiResponse
   const code = json?.http?.code ?? 200
 
