@@ -27,6 +27,17 @@ const nextConfig = {
 
   eslint: { ignoreDuringBuilds: true },
   images: { unoptimized: true },
+
+  async rewrites() {
+    return isProd
+      ? []
+      : [
+          {
+            source: '/api/:path*',
+            destination: 'http://localhost:8080/api/:path*',
+          },
+        ]
+  },
 }
 
 module.exports = nextConfig
