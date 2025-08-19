@@ -27,7 +27,6 @@ import {
   Bell,
   Clock,
   Store,
-  ShoppingCart,
   BarChart3,
   ClipboardList,
   MapPin,
@@ -88,8 +87,7 @@ export default function Navbar() {
       icon: Briefcase,
       submenu: [
         { label: t('nav.local_job_market'), href: '/pasar-kerja', icon: Users },
-        { label: t('nav.village_umkm'), href: '/umkm', icon: Store },
-        { label: t('nav.village_online_store'), href: '/toko-online', icon: ShoppingCart }
+        { label: t('nav.village_umkm'), href: '/umkm', icon: Store }
       ]
     },
     {
@@ -98,7 +96,8 @@ export default function Navbar() {
       icon: PieChart,
       submenu: [
         { label: t('nav.village_budget'), href: '/transparansi/apbdes', icon: BarChart3 },
-        { label: t('nav.activity_reports'), href: '/transparansi/laporan', icon: ClipboardList }
+        { label: t('nav.activity_reports'), href: '/transparansi/laporan', icon: ClipboardList },
+        { label: 'Statistik Penduduk Cilame', href: '/transparansi/statistik-penduduk', icon: Users }
       ]
     },
     {

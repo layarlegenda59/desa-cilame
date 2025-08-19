@@ -9,7 +9,7 @@ import {
   Heart,
   UserPlus,
   FileCheck,
-  CreditCard
+  BarChart3
 } from 'lucide-react';
 
 export default function QuickAccessGrid() {
@@ -66,11 +66,11 @@ export default function QuickAccessGrid() {
       color: 'bg-teal-500 hover:bg-teal-600'
     },
     {
-      title: t('quick.payment'),
-      description: t('quick.payment_desc'),
-      icon: CreditCard,
-      href: '/pembayaran',
-      color: 'bg-pink-500 hover:bg-pink-600'
+      title: 'Statistik Penduduk Cilame',
+      description: 'Lihat data statistik penduduk desa',
+      icon: BarChart3,
+      href: '/transparansi/statistik-penduduk',
+      color: 'bg-cyan-500 hover:bg-cyan-600'
     }
   ];
 
