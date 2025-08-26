@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,28 +22,29 @@ import {
 } from 'lucide-react';
 
 export default function PasarKerjaPage() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('semua');
   const [selectedLocation, setSelectedLocation] = useState('semua');
 
   const categories = [
-    { id: 'semua', label: t('job.all_categories') },
-    { id: 'tukang', label: t('job.construction') },
-    { id: 'rumah-tangga', label: t('job.housekeeping') },
-    { id: 'kebun', label: t('job.agriculture') },
-    { id: 'otomotif', label: t('job.automotive') },
-    { id: 'elektronik', label: t('job.electronics') },
-    { id: 'kuliner', label: t('job.culinary') },
-    { id: 'lainnya', label: t('job.others') }
+    { id: 'semua', label: 'Semua Kategori' },
+    { id: 'tukang', label: 'Tukang & Konstruksi' },
+    { id: 'rumah-tangga', label: 'Pembantu Rumah Tangga' },
+    { id: 'kebun', label: 'Pertanian & Kebun' },
+    { id: 'otomotif', label: 'Otomotif' },
+    { id: 'elektronik', label: 'Elektronik' },
+    { id: 'kuliner', label: 'Kuliner' },
+    { id: 'lainnya', label: 'Lainnya' }
   ];
 
   const locations = [
-    { id: 'semua', label: t('job.all_locations') },
-    { id: 'pusat', label: t('job.center') },
-    { id: 'utara', label: t('job.north') },
-    { id: 'selatan', label: t('job.south') },
-    { id: 'timur', label: t('job.east') },
-    { id: 'barat', label: t('job.west') }
+    { id: 'semua', label: 'Semua Lokasi' },
+    { id: 'pusat', label: 'Cilame Pusat' },
+    { id: 'utara', label: 'Cilame Utara' },
+    { id: 'selatan', label: 'Cilame Selatan' },
+    { id: 'timur', label: 'Cilame Timur' },
+    { id: 'barat', label: 'Cilame Barat' }
   ];
 
   const workers = [

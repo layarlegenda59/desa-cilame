@@ -12,7 +12,7 @@ export default function NewsSection() {
     {
       title: 'Pembangunan Jalan Akses Desa Tahap II Dimulai',
       excerpt: 'Program pembangunan infrastruktur jalan sepanjang 2 kilometer dimulai hari ini dengan anggaran dari APBN.',
-      image: 'https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/ren-kM5z3NrQHcI-unsplash.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9yZW4ta001ejNOclFIY0ktdW5zcGxhc2guanBnIiwiaWF0IjoxNzU1MDUyODI0LCJleHAiOjE3ODY1ODg4MjR9.1koqTGTlVNfF5LKAhmf4CBvHUeLdAeiGAB8ntbvrYBs',
+      image: '/jalan.jpg',
       date: '2025-01-15',
       author: 'Tim Humas Desa',
       category: 'Pembangunan'
@@ -20,7 +20,7 @@ export default function NewsSection() {
     {
       title: 'Pelatihan UMKM Digital Marketing Sukses Digelar',
       excerpt: 'Sebanyak 50 pelaku UMKM mengikuti pelatihan digital marketing untuk meningkatkan penjualan online.',
-      image: 'https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/pelatihan.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9wZWxhdGloYW4uanBnIiwiaWF0IjoxNzU1MDUzMTM5LCJleHAiOjE3ODY1ODkxMzl9.VM7i8NipiSobhqAGH05OvkidLFNDTSmcEpJsYErGXxM',
+      image: '/pelatihan.jpg',
       date: '2025-01-10',
       author: 'Bagian Ekonomi',
       category: 'UMKM'
@@ -28,7 +28,7 @@ export default function NewsSection() {
     {
       title: 'Festival Budaya Desa Cilame 2025',
       excerpt: 'Persiapan festival budaya tahunan sudah dimulai dengan melibatkan seluruh warga dan komunitas seni lokal.',
-      image: 'https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop',
+      image: '/festival.jpg',
       date: '2025-01-08',
       author: 'Bagian Kebudayaan',
       category: 'Budaya'

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,19 +22,20 @@ import {
 } from 'lucide-react';
 
 export default function UMKMPage() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('semua');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const categories = [
-    { id: 'semua', label: t('umkm.all_categories') },
-    { id: 'kuliner', label: t('umkm.culinary') },
-    { id: 'fashion', label: t('umkm.fashion') },
-    { id: 'kerajinan', label: t('umkm.handicraft') },
-    { id: 'pertanian', label: t('umkm.agriculture') },
-    { id: 'jasa', label: t('umkm.services') },
-    { id: 'elektronik', label: t('umkm.electronics') },
-    { id: 'kosmetik', label: t('umkm.beauty') }
+    { id: 'semua', label: 'Semua Kategori' },
+    { id: 'kuliner', label: 'Kuliner' },
+    { id: 'fashion', label: 'Fashion' },
+    { id: 'kerajinan', label: 'Kerajinan' },
+    { id: 'pertanian', label: 'Pertanian' },
+    { id: 'jasa', label: 'Jasa' },
+    { id: 'elektronik', label: 'Elektronik' },
+    { id: 'kosmetik', label: 'Kosmetik & Kecantikan' }
   ];
 
   const umkmData = [

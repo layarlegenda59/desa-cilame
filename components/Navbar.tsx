@@ -86,19 +86,16 @@ export default function Navbar() {
       label: t('nav.services_economy'),
       icon: Briefcase,
       submenu: [
+        { label: t('nav.village_umkm'), href: '/umkm', icon: Store },
         { label: t('nav.local_job_market'), href: '/pasar-kerja', icon: Users },
-        { label: t('nav.village_umkm'), href: '/umkm', icon: Store }
+        { label: t('nav.transparency'), href: '/transparansi', icon: PieChart }
       ]
     },
     {
-      id: 'transparansi',
-      label: t('nav.transparency'),
-      icon: PieChart,
-      submenu: [
-        { label: t('nav.village_budget'), href: '/transparansi/apbdes', icon: BarChart3 },
-        { label: t('nav.activity_reports'), href: '/transparansi/laporan', icon: ClipboardList },
-        { label: 'Statistik Penduduk Cilame', href: '/transparansi/statistik-penduduk', icon: Users }
-      ]
+      id: 'peraturan',
+      label: language === 'id' ? 'Peraturan Desa' : 'Village Regulations',
+      href: '/peraturan-desa',
+      icon: FileText
     },
     {
       id: 'kontak',
@@ -132,12 +129,8 @@ export default function Navbar() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
-              <Phone className="h-4 w-4 mr-1" />
-              <span>(022) 6867-8901</span>
-            </div>
-            <div className="flex items-center">
               <Mail className="h-4 w-4 mr-1" />
-              <span>info@desacilame.id</span>
+              <span>info@desacilame.com</span>
             </div>
           </div>
           <div className="hidden md:block">
@@ -156,14 +149,12 @@ export default function Navbar() {
           <div className="flex justify-between items-center py-3">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 flex-shrink-0">
-              <div className="p-2 rounded-lg shadow-md relative w-12 h-12">
-                <Image
-                  src="https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/GKL2_logo-kabupaten-bandung-barat%20-%20Koleksilogo.com.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9HS0wyX2xvZ28ta2FidXBhdGVuLWJhbmR1bmctYmFyYXQgLSBLb2xla3NpbG9nby5jb20ucG5nIiwiaWF0IjoxNzU1MDQ4NTUwLCJleHAiOjE3ODY1ODQ1NTB9.e-Qn90XAN1ew-AcFSHCSL3mKvHoWtkd4qqgyu1n00bs"
-                  alt="Logo Kabupaten Bandung Barat"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              <Image
+              src="/logo-kabupaten-bandung-barat.png"
+              alt="Logo Kabupaten Bandung Barat"
+              width={48}
+              height={48}
+            />
               <div>
                 <h1 className="font-bold text-lg text-white leading-tight">Desa Cilame</h1>
                 <p className="text-xs text-teal-100">Portal Digital Desa</p>
@@ -220,10 +211,12 @@ export default function Navbar() {
             {/* Right Side Actions */}
             <div className="hidden xl:flex items-center space-x-3 flex-shrink-0">
               {/* CTA Button */}
-              <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl whitespace-nowrap text-sm">
-                <FileText className="h-4 w-4 mr-2" />
-                {t('nav.online_letter_request')}
-              </Button>
+              <Link href="/surat-online">
+                <Button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl whitespace-nowrap text-sm">
+                  <FileText className="h-4 w-4 mr-2" />
+                  {t('nav.online_letter_request')}
+                </Button>
+              </Link>
 
               {/* Language Dropdown */}
               <div className="relative">
@@ -333,10 +326,12 @@ export default function Navbar() {
 
                 {/* Mobile CTA & Language */}
                 <div className="px-4 pt-4 border-t border-gray-100 space-y-3">
-                  <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold">
-                    <FileText className="h-4 w-4 mr-2" />
-                    {t('nav.online_letter_request')}
-                  </Button>
+                  <Link href="/surat-online">
+                    <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold">
+                      <FileText className="h-4 w-4 mr-2" />
+                      {t('nav.online_letter_request')}
+                    </Button>
+                  </Link>
                   
                   {/* Mobile Language Toggle */}
                   <div className="flex justify-center space-x-2">

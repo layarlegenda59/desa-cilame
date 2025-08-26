@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -17,16 +18,17 @@ import {
 } from 'lucide-react';
 
 export default function TransparansiPage() {
+  const { t } = useLanguage();
   const [selectedYear, setSelectedYear] = useState('2024');
   const [selectedPeriod, setSelectedPeriod] = useState('tahunan');
 
   const years = ['2024', '2023', '2022'];
   const periods = [
-    { id: 'tahunan', label: t('transparency.annual') },
-    { id: 'triwulan-4', label: t('transparency.quarter_4') },
-    { id: 'triwulan-3', label: t('transparency.quarter_3') },
-    { id: 'triwulan-2', label: t('transparency.quarter_2') },
-    { id: 'triwulan-1', label: t('transparency.quarter_1') }
+    { id: 'tahunan', label: 'Tahunan' },
+    { id: 'triwulan-4', label: 'Triwulan 4' },
+    { id: 'triwulan-3', label: 'Triwulan 3' },
+    { id: 'triwulan-2', label: 'Triwulan 2' },
+    { id: 'triwulan-1', label: 'Triwulan 1' }
   ];
 
   const budgetData = {

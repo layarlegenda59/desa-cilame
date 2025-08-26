@@ -20,7 +20,7 @@ export default function QuickAccessGrid() {
       title: t('quick.online_letter'),
       description: t('quick.online_letter_desc'),
       icon: FileText,
-      href: '/layanan/surat-online',
+      href: '/surat-online',
       color: 'bg-blue-500 hover:bg-blue-600'
     },
     {

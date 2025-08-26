@@ -37,12 +37,12 @@ export default function Home() {
       subtitle: t('hero.subtitle')
     },
     {
-      image: 'https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/edi-kurniawan-uPnvAYdLhNw-unsplash.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9lZGkta3Vybmlhd2FuLXVQbnZBWWRMaE53LXVuc3BsYXNoLmpwZyIsImlhdCI6MTc1NTA1MjI5OCwiZXhwIjoxNzg2NTg4Mjk4fQ.mTk6xstlq11ILfvid-PeqiIkXWnRfrnD16ygCA9Eyl4',
+      image: '/kerjasama.jpg',
       title: t('hero.transparency'),
       subtitle: t('hero.transparency_subtitle')
     },
     {
-      image: 'https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/falaq-lazuardi-laiA0BlQt8A-unsplash.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9mYWxhcS1sYXp1YXJkaS1sYWlBMEJsUXQ4QS11bnNwbGFzaC5qcGciLCJpYXQiOjE3NTUwNTE4NTQsImV4cCI6MTc4NjU4Nzg1NH0.DVOpUeKqh0xU-B7UpmgNKdOr71w3QMmxj4S5yyhcqLQ',
+      image: '/market.jpg',
       title: t('hero.umkm'),
       subtitle: t('hero.umkm_subtitle')
     }
@@ -78,24 +78,59 @@ export default function Home() {
               sizes="(max-width: 768px) 100vw, (max-width: 1366px) 100vw, 100vw"
               quality={85}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+            {index === 0 ? (
+              <>
+                <Image
+                  src="/mountin.jpg"
+                  alt="Selamat Datang di Cilame"
+                  fill
+                  className="hero-image"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1366px) 100vw, 100vw"
+                  quality={85}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30" />
+              </>
+            ) : (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+              </>
+            )}
             <div className="absolute inset-0 flex items-center justify-center text-center text-white">
               <div className="max-w-4xl px-4">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-                  {slide.title}
-                </h1>
+                {index === 0 ? (
+                  <div className="mb-6">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight text-white drop-shadow-2xl">
+                      <span className="bg-gradient-to-r from-white via-green-100 to-white bg-clip-text text-transparent">
+                        Selamat Datang
+                      </span>
+                    </h1>
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-green-300 drop-shadow-xl mb-2">
+                      di Desa Cilame
+                    </h2>
+                    <div className="w-32 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full shadow-lg"></div>
+                  </div>
+                ) : (
+                  <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+                    {slide.title}
+                  </h1>
+                )}
                 <p className="text-xl md:text-2xl mb-8 text-gray-200">
                   {slide.subtitle}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
-                    <FileText className="mr-2 h-5 w-5" />
-                    {t('hero.online_services')}
-                  </Button>
-                  <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white hover:text-black">
-                    <MessageSquare className="mr-2 h-5 w-5" />
-                    {t('hero.contact_us')}
-                  </Button>
+                  <Link href="/surat-online">
+                    <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white">
+                      <FileText className="mr-2 h-5 w-5" />
+                      {t('hero.online_services')}
+                    </Button>
+                  </Link>
+                  <Link href="/kontak">
+                    <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white hover:text-black">
+                      <MessageSquare className="mr-2 h-5 w-5" />
+                      {t('hero.contact_us')}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -258,15 +293,11 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-3 text-green-200" />
-                  <span>Jl. Raya Desa Cilame, Kec. Ngamprah, Kab. Bandung Barat</span>
-                </div>
-                <div className="flex items-center">
-                  <Phone className="h-5 w-5 mr-3 text-green-200" />
-                  <span>(022) 6867-8901</span>
+                  <span>Jalan Galudra No. 37, Desa Cilame, Kecamatan Ngamprah - 40552</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="h-5 w-5 mr-3 text-green-200" />
-                  <span>info@desacilame.id</span>
+                  <span>info@desacilame.com</span>
                 </div>
 
               </div>

@@ -52,10 +52,10 @@ export default function ChatBot() {
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
           <Image
-             src="https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/Chatbot%20Desa%20Cilame%20-%20JD.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9DaGF0Ym90IERlc2EgQ2lsYW1lIC0gSkQucG5nIiwiaWF0IjoxNzU1MDQ5MDQ0LCJleHAiOjE3ODY1ODUwNDR9.I4-iSS4QFqn7CxBpieRcIUTy1KrhoDXxV332hquHZeY"
-             alt="Chatbot Desa Cilame"
-             width={100}
-             height={100}
+             src="/Kang Wira - sahabat digital Cilame.png"
+             alt="Kang Wira - Sahabat Digital Cilame"
+             width={180}
+             height={180}
              className="object-contain cursor-pointer hover:scale-105 transition-transform"
              onClick={() => setIsOpen(true)}
            />
@@ -72,10 +72,10 @@ export default function ChatBot() {
                     <p className="text-green-100 text-sm">{t('chatbot.status')}</p>
                   </div>
                   <Image
-                     src="https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/Chatbot%20Desa%20Cilame%20-%20JD.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9DaGF0Ym90IERlc2EgQ2lsYW1lIC0gSkQucG5nIiwiaWF0IjoxNzU1MDQ5ODEzLCJleHAiOjE3ODY1ODU4MTN9.TBTyKo3pqGdPewrgerR-gmv4uuec-iXgKQ4Uxp4UCG4"
-                     alt="Chatbot Desa Cilame"
-                     width={63}
-                     height={63}
+                     src="/Kang Wira - sahabat digital Cilame.png"
+                     alt="Kang Wira - Sahabat Digital Cilame"
+                     width={113}
+                     height={113}
                      className="object-contain"
                    />
                 </div>

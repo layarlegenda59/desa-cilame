@@ -169,7 +169,7 @@ const translations = {
     'info.police': 'Polsek: 110',
     'info.fire_dept': 'Pemadam: 113',
     'info.ambulance': 'Ambulans: 118',
-    'info.village_office': 'Desa: (022) 6867-8901',
+    'info.village_office': 'Desa',
     'info.download': 'Unduh',
     'info.no_results': 'Tidak ada informasi yang ditemukan',
     
@@ -413,7 +413,7 @@ const translations = {
     'info.police': 'Polsek: 110',
     'info.fire_dept': 'Pemadam: 113',
     'info.ambulance': 'Ambulans: 118',
-    'info.village_office': 'Désa: (022) 6867-8901',
+    'info.village_office': 'Désa',
     'info.download': 'Unduh',
     'info.no_results': 'Teu aya informasi anu kapanggih',
     
