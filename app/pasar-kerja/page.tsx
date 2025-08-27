@@ -221,9 +221,9 @@ export default function PasarKerjaPage() {
             <Card key={worker.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <CardContent className="p-0">
                 {/* Worker Photo */}
-                <div className="relative card-image-container aspect-4-3">
+                <div className="relative aspect-4-3">
                   <Image
-                    src={worker.photo}
+                    src={worker.name === 'Budi Santoso' ? '/Budi Santoso.jpg' : worker.name === 'Sari Wulandari' ? '/Sari Wulandari.jpg' : worker.name === 'Agus Permana' ? '/Agus Permana.jpg' : worker.name === 'Rina Handayani' ? '/Rina Handayani.jpg' : worker.name === 'Dedi Kurniawan' ? '/Dedi Kurniawan.jpg' : worker.name === 'Fitri Rahayu' ? '/Fitri Rahayu.jpg' : worker.photo}
                     alt={worker.name}
                     fill
                     className="card-image"
