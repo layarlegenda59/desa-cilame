@@ -1,0 +1,51 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="40" cy="40" r="40" fill="#2563eb" opacity="0.1"/>
+  <circle cx="40" cy="40" r="35" fill="#3b82f6" opacity="0.2"/>
+  
+  <!-- Face -->
+  <circle cx="40" cy="35" r="18" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="34" cy="31" r="2" fill="#1f2937"/>
+  <circle cx="46" cy="31" r="2" fill="#1f2937"/>
+  <circle cx="34.5" cy="30.5" r="0.5" fill="#ffffff"/>
+  <circle cx="46.5" cy="30.5" r="0.5" fill="#ffffff"/>
+  
+  <!-- Nose -->
+  <ellipse cx="40" cy="35" rx="1" ry="1.5" fill="#f59e0b"/>
+  
+  <!-- Mouth (Smile) -->
+  <path d="M 35 38 Q 40 42 45 38" stroke="#1f2937" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Hair -->
+  <path d="M 25 28 Q 30 20 40 22 Q 50 20 55 28 Q 52 25 40 25 Q 28 25 25 28" fill="#1f2937"/>
+  
+  <!-- Traditional Hat (Peci) -->
+  <ellipse cx="40" cy="24" rx="16" ry="8" fill="#1f2937"/>
+  <ellipse cx="40" cy="22" rx="14" ry="6" fill="#374151"/>
+  
+  <!-- Body/Shirt -->
+  <rect x="28" y="50" width="24" height="20" rx="3" fill="#059669"/>
+  <rect x="30" y="52" width="20" height="16" rx="2" fill="#10b981"/>
+  
+  <!-- Arms -->
+  <ellipse cx="22" cy="58" rx="6" ry="12" fill="#fbbf24" transform="rotate(-15 22 58)"/>
+  <ellipse cx="58" cy="58" rx="6" ry="12" fill="#fbbf24" transform="rotate(15 58 58)"/>
+  
+  <!-- Hands -->
+  <circle cx="18" cy="65" r="4" fill="#fbbf24"/>
+  <circle cx="62" cy="65" r="4" fill="#fbbf24"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="15" cy="15" r="2" fill="#3b82f6" opacity="0.3"/>
+  <circle cx="65" cy="20" r="1.5" fill="#10b981" opacity="0.4"/>
+  <circle cx="70" cy="60" r="2" fill="#f59e0b" opacity="0.3"/>
+  <circle cx="10" cy="65" r="1" fill="#ef4444" opacity="0.4"/>
+  
+  <!-- Chat Bubble Indicator -->
+  <circle cx="65" cy="25" r="8" fill="#ffffff" stroke="#e5e7eb" stroke-width="2"/>
+  <circle cx="62" cy="22" r="1.5" fill="#3b82f6"/>
+  <circle cx="65" cy="25" r="1.5" fill="#3b82f6"/>
+  <circle cx="68" cy="28" r="1.5" fill="#3b82f6"/>
+</svg>
