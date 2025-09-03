@@ -96,6 +96,14 @@
   
   .card-image {
     @apply object-cover w-full h-full transition-transform duration-300 hover:scale-105;
+    object-fit: cover;
+    object-position: center;
+    min-height: 100%;
+    min-width: 100%;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
   
   /* Chatbot Animations */
@@ -126,6 +134,38 @@
     aspect-ratio: 1 / 1;
   }
   
+  .card-image-container {
+    @apply relative overflow-hidden bg-gray-100;
+    min-height: 200px;
+    width: 100%;
+    display: block;
+  }
+  
+  .card-image-container img {
+    @apply absolute inset-0 w-full h-full;
+    object-fit: cover;
+    object-position: center;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Ensure proper aspect ratio maintenance */
+  .card-image-container::before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-bottom: 75%; /* 4:3 aspect ratio */
+  }
+  
+  .card-image-container.aspect-16-9::before {
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  }
+  
+  .card-image-container.aspect-square::before {
+    padding-bottom: 100%; /* 1:1 aspect ratio */
+  }
+  
   /* Mobile optimizations */
   @media (max-width: 768px) {
     .hero-section {
@@ -134,6 +174,7 @@
     
     .card-image-container {
       @apply h-40;
+      min-height: 160px;
     }
   }
   
@@ -145,6 +186,7 @@
     
     .card-image-container {
       @apply h-48;
+      min-height: 192px;
     }
   }
   
@@ -156,6 +198,23 @@
     
     .card-image-container {
       @apply h-56;
+      min-height: 224px;
+    }
+  }
+  
+  /* Ultra-wide desktop optimizations */
+  @media (min-width: 2560px) {
+    .card-image-container {
+      @apply h-64;
+      min-height: 256px;
+    }
+  }
+  
+  /* 4K and larger displays */
+  @media (min-width: 3840px) {
+    .card-image-container {
+      @apply h-72;
+      min-height: 288px;
     }
   }
   

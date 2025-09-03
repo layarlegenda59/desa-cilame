@@ -33,16 +33,9 @@ export default function KontakPage() {
       color: 'bg-blue-100 text-blue-600'
     },
     {
-      icon: <Phone className="h-6 w-6" />,
-      title: 'Telepon',
-      content: '(022) 1234-5678\n0812-3456-7890 (WhatsApp)',
-      action: 'Hubungi Sekarang',
-      color: 'bg-green-100 text-green-600'
-    },
-    {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email',
-      content: 'info@desacilame.com\npelayanan@desacilame.com',
+      content: 'info@desacilame.com',
       action: 'Kirim Email',
       color: 'bg-purple-100 text-purple-600'
     },
@@ -58,8 +51,7 @@ export default function KontakPage() {
   const departments = [
     {
       name: 'Kepala Desa',
-      officer: 'Bapak Drs. Ahmad Suryadi',
-      phone: '0812-3456-7890',
+      officer: 'AAS MOHAMAD ASOR, S.H., M.H., NL.P.',
       email: 'kades@desacilame.com',
       description: 'Pimpinan tertinggi pemerintahan desa',
       icon: <User className="h-5 w-5" />,
@@ -67,8 +59,7 @@ export default function KontakPage() {
     },
     {
       name: 'Sekretaris Desa',
-      officer: 'Ibu Siti Nurhaliza, S.Sos',
-      phone: '0812-3456-7891',
+      officer: 'DENI AHMAD BERLIAN',
       email: 'sekdes@desacilame.com',
       description: 'Koordinator administrasi dan tata usaha',
       icon: <FileText className="h-5 w-5" />,
@@ -76,8 +67,7 @@ export default function KontakPage() {
     },
     {
       name: 'Kaur Pemerintahan',
-      officer: 'Bapak Dedi Kurniawan, S.AP',
-      phone: '0812-3456-7892',
+      officer: 'TRI SOPYAN',
       email: 'pemerintahan@desacilame.com',
       description: 'Pelayanan administrasi kependudukan',
       icon: <Building className="h-5 w-5" />,
@@ -85,8 +75,7 @@ export default function KontakPage() {
     },
     {
       name: 'Kaur Kesejahteraan',
-      officer: 'Ibu Rina Marlina, S.Sos',
-      phone: '0812-3456-7893',
+      officer: 'USEP SUDARYA',
       email: 'kesejahteraan@desacilame.com',
       description: 'Program sosial dan bantuan masyarakat',
       icon: <Heart className="h-5 w-5" />,
@@ -94,17 +83,15 @@ export default function KontakPage() {
     },
     {
       name: 'Kaur Pembangunan',
-      officer: 'Bapak Eko Prasetyo, S.T',
-      phone: '0812-3456-7894',
-      email: 'pembangunan@desacilame.com',
+      officer: 'INDRA LESMANA',
+      email: 'perencanaan@desacilame.com',
       description: 'Infrastruktur dan pembangunan desa',
       icon: <Building className="h-5 w-5" />,
       color: 'bg-orange-100 text-orange-600'
     },
     {
       name: 'Kaur Keuangan',
-      officer: 'Ibu Dewi Sartika, S.E',
-      phone: '0812-3456-7895',
+      officer: 'DEDEH MARYATI',
       email: 'keuangan@desacilame.com',
       description: 'Pengelolaan keuangan desa',
       icon: <FileText className="h-5 w-5" />,
@@ -189,7 +176,7 @@ export default function KontakPage() {
         {/* Contact Information */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Informasi Kontak</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {contactInfo.map((info, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <CardContent className="pt-6 text-center">
@@ -378,10 +365,6 @@ export default function KontakPage() {
                         <p className="text-blue-600 font-medium mb-2">{dept.officer}</p>
                         <p className="text-gray-600 text-sm mb-3">{dept.description}</p>
                         <div className="flex flex-col sm:flex-row gap-2">
-                          <Button variant="outline" size="sm" className="text-green-600 border-green-300 hover:bg-green-50">
-                            <Phone className="h-3 w-3 mr-1" />
-                            {dept.phone}
-                          </Button>
                           <Button variant="outline" size="sm" className="text-blue-600 border-blue-300 hover:bg-blue-50">
                             <Mail className="h-3 w-3 mr-1" />
                             Email

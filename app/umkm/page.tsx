@@ -28,15 +28,15 @@ export default function UMKMPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const categories = [
-    { id: 'semua', label: 'Semua Kategori' },
-    { id: 'kuliner', label: 'Kuliner' },
-    { id: 'fashion', label: 'Fashion' },
-    { id: 'kerajinan', label: 'Kerajinan' },
-    { id: 'pertanian', label: 'Pertanian' },
-    { id: 'jasa', label: 'Jasa' },
-    { id: 'elektronik', label: 'Elektronik' },
-    { id: 'kosmetik', label: 'Kosmetik & Kecantikan' }
-  ];
+      { id: 'semua', label: t('umkm.all_categories') },
+      { id: 'kuliner', label: t('umkm.culinary') },
+      { id: 'fashion', label: t('umkm.fashion') },
+      { id: 'kerajinan', label: t('umkm.handicraft') },
+      { id: 'pertanian', label: t('umkm.agriculture') },
+      { id: 'jasa', label: t('umkm.services') },
+      { id: 'elektronik', label: t('umkm.electronics') },
+      { id: 'kosmetik', label: t('umkm.beauty') }
+    ];
 
   const umkmData = [
     {
@@ -61,14 +61,14 @@ export default function UMKMPage() {
       id: 2,
       name: 'Kerajinan Bambu Hani',
       category: 'kerajinan',
-      image: 'https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      image: '/Kerajinan Bambu.jpg',
       description: 'Kerajinan bambu berkualitas tinggi untuk dekorasi rumah dan keperluan sehari-hari.',
       location: 'Kampung Bambu, Cilame Utara',
       rating: 4.9,
       reviewCount: 87,
       phone: '081234567891',
       products: [
-        { name: 'Keranjang Bambu', price: 45000, image: 'https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
+        { name: 'Keranjang Bambu', price: 45000, image: '/Kerajinan Bambu.jpg' },
         { name: 'Vas Bunga Bambu', price: 35000, image: 'https://images.pexels.com/photos/1029620/pexels-photo-1029620.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
         { name: 'Anyaman Dinding', price: 75000, image: 'https://images.pexels.com/photos/6207387/pexels-photo-6207387.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
       ],
@@ -163,9 +163,9 @@ export default function UMKMPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-4">Direktori UMKM Desa Cilame</h1>
+          <h1 className="text-4xl font-bold mb-4">{t('umkm.title')}</h1>
           <p className="text-purple-100 text-lg max-w-2xl mx-auto">
-            Temukan dan dukung produk lokal berkualitas dari usaha mikro, kecil, dan menengah di Desa Cilame
+            {t('umkm.subtitle')}
           </p>
         </div>
       </section>
@@ -203,14 +203,14 @@ export default function UMKMPage() {
                 size="sm"
                 onClick={() => setViewMode('grid')}
               >
-                Grid
+                {t('ui.grid')}
               </Button>
               <Button
                 variant={viewMode === 'list' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setViewMode('list')}
               >
-                List
+                {t('ui.list')}
               </Button>
             </div>
           </div>
@@ -462,6 +462,7 @@ export default function UMKMPage() {
           <div className="text-center py-12">
             <Store className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500">{t('umkm.no_results')}</p>
+            <p className="text-gray-400 mt-2">{t('umkm.try_different_search')}</p>
           </div>
         )}
 

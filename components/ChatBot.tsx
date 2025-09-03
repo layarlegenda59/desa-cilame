@@ -249,8 +249,8 @@ export default function ChatBot() {
         <Image
          src="/Kang Wira - sahabat digital Cilame.png"
          alt="Kang Wira - Sahabat Digital Cilame"
-         width={173}
-         height={173}
+         width={138}
+         height={138}
          className="cursor-pointer transition-all duration-300 hover:scale-105 object-contain flex-shrink-0"
          onClick={() => setIsOpen(!isOpen)}
        />
