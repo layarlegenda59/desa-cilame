@@ -142,7 +142,7 @@ export function SearchFilter({
               <Calendar
                 mode="range"
                 defaultMonth={range.from}
-                selected={range}
+                selected={range.from && range.to ? { from: range.from, to: range.to } : undefined}
                 onSelect={(newRange) => handleDateRangeChange(filter.key, newRange || {})}
                 numberOfMonths={2}
                 initialFocus

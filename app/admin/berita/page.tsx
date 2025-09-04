@@ -70,12 +70,18 @@ export default function BeritaManagement() {
   const [deleteBeritaId, setDeleteBeritaId] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    content: string;
+    excerpt: string;
+    category: string;
+    status: 'draft' | 'published' | 'archived';
+  }>({
     title: '',
     content: '',
     excerpt: '',
     category: '',
-    status: 'draft' as const
+    status: 'draft'
   });
 
   // Mock data

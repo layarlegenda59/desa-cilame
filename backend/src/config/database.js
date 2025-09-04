@@ -1,4 +1,6 @@
-const { Pool } = require('pg');
+const sqlite3 = require('sqlite3').verbose();
+const { open } = require('sqlite');
+const path = require('path');
 const winston = require('winston');
 
 // Logger configuration
@@ -20,48 +22,37 @@ const logger = winston.createLogger({
 });
 
 // Database configuration
-const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT) || 5432,
-  database: process.env.DB_NAME || 'desa_cilame',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD,
-  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-  max: parseInt(process.env.DB_MAX_CONNECTIONS) || 20,
-  idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT) || 30000,
-  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 2000,
-  statement_timeout: 30000,
-  query_timeout: 30000
+const dbPath = process.env.DB_PATH || path.join(__dirname, '../../database/desa_cilame.db');
+
+// Create database connection
+let db = null;
+
+const initDatabase = async () => {
+  try {
+    db = await open({
+      filename: dbPath,
+      driver: sqlite3.Database
+    });
+    
+    // Enable foreign keys
+    await db.exec('PRAGMA foreign_keys = ON');
+    
+    logger.info('SQLite database connected successfully');
+    return db;
+  } catch (error) {
+    logger.error('Database connection failed:', error.message);
+    throw error;
+  }
 };
-
-// Create connection pool
-const pool = new Pool(dbConfig);
-
-// Pool event handlers
-pool.on('connect', (client) => {
-  logger.info('New database client connected');
-});
-
-pool.on('error', (err, client) => {
-  logger.error('Unexpected error on idle client:', err);
-  process.exit(-1);
-});
-
-pool.on('acquire', (client) => {
-  logger.debug('Client acquired from pool');
-});
-
-pool.on('release', (client) => {
-  logger.debug('Client released back to pool');
-});
 
 // Database connection test
 const testConnection = async () => {
   try {
-    const client = await pool.connect();
-    const result = await client.query('SELECT NOW()');
-    client.release();
-    logger.info('Database connection successful:', result.rows[0]);
+    if (!db) {
+      await initDatabase();
+    }
+    const result = await db.get('SELECT datetime("now") as now');
+    logger.info('Database connection successful:', result);
     return true;
   } catch (err) {
     logger.error('Database connection failed:', err.message);
@@ -73,9 +64,31 @@ const testConnection = async () => {
 const query = async (text, params = []) => {
   const start = Date.now();
   try {
-    const result = await pool.query(text, params);
+    if (!db) {
+      await initDatabase();
+    }
+    
+    // Convert PostgreSQL syntax to SQLite
+    let sqliteQuery = text
+      .replace(/\$\d+/g, '?') // Replace $1, $2, etc. with ?
+      .replace(/RETURNING \*/g, '') // Remove RETURNING clause
+      .replace(/NOW\(\)/g, 'datetime("now")');
+    
+    let result;
+    if (sqliteQuery.trim().toUpperCase().startsWith('SELECT')) {
+      result = await db.all(sqliteQuery, params);
+      result = { rows: result, rowCount: result.length };
+    } else {
+      const info = await db.run(sqliteQuery, params);
+      result = { 
+        rows: [], 
+        rowCount: info.changes || 0,
+        insertId: info.lastID
+      };
+    }
+    
     const duration = Date.now() - start;
-    logger.debug('Query executed', { text, duration, rows: result.rowCount });
+    logger.debug('Query executed', { text: sqliteQuery, duration, rows: result.rowCount });
     return result;
   } catch (error) {
     const duration = Date.now() - start;
@@ -86,35 +99,37 @@ const query = async (text, params = []) => {
 
 // Transaction helper
 const transaction = async (callback) => {
-  const client = await pool.connect();
+  if (!db) {
+    await initDatabase();
+  }
+  
   try {
-    await client.query('BEGIN');
-    const result = await callback(client);
-    await client.query('COMMIT');
+    await db.exec('BEGIN TRANSACTION');
+    const result = await callback(db);
+    await db.exec('COMMIT');
     return result;
   } catch (error) {
-    await client.query('ROLLBACK');
+    await db.exec('ROLLBACK');
     throw error;
-  } finally {
-    client.release();
   }
 };
 
 // Graceful shutdown
 const closePool = async () => {
   try {
-    await pool.end();
-    logger.info('Database pool closed');
+    if (db) {
+      await db.close();
+      logger.info('Database connection closed');
+    }
   } catch (error) {
-    logger.error('Error closing database pool:', error.message);
+    logger.error('Error closing database connection:', error.message);
   }
 };
 
 module.exports = {
-  pool,
+  initDatabase,
   query,
   transaction,
   testConnection,
-  closePool,
-  logger
+  getDb: () => db
 };

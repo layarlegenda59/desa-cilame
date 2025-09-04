@@ -6,8 +6,23 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const config = require('../config/app');
-const { logger } = require('../config/database');
+const winston = require('winston');
 const { AppError } = require('./errorHandler');
+
+// Initialize logger
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.simple()
+    })
+  ]
+});
 
 // Rate limiting configuration
 const createRateLimit = (windowMs, max, message) => {
@@ -33,7 +48,7 @@ const createRateLimit = (windowMs, max, message) => {
 // General rate limiting
 const generalLimiter = createRateLimit(
   config.rateLimit.windowMs,
-  config.rateLimit.max,
+  config.rateLimit.maxRequests,
   'Terlalu banyak permintaan dari IP ini, coba lagi nanti'
 );
 
@@ -64,7 +79,7 @@ const corsOptions = {
     // Allow requests with no origin (mobile apps, etc.)
     if (!origin) return callback(null, true);
     
-    const allowedOrigins = config.cors.allowedOrigins;
+    const allowedOrigins = config.cors.origin;
     
     if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
       callback(null, true);

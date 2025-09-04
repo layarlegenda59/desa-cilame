@@ -78,7 +78,19 @@ export default function PerangkatManagement() {
   const [deletePerangkatId, setDeletePerangkatId] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    position: string;
+    department: string;
+    email: string;
+    phone: string;
+    address: string;
+    startDate: string;
+    status: 'active' | 'inactive' | 'retired';
+    description: string;
+    education: string;
+    experience: string;
+  }>({
     name: '',
     position: '',
     department: '',
@@ -86,7 +98,7 @@ export default function PerangkatManagement() {
     phone: '',
     address: '',
     startDate: '',
-    status: 'active' as const,
+    status: 'active',
     description: '',
     education: '',
     experience: ''

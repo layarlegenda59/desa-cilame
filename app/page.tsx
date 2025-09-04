@@ -32,7 +32,7 @@ export default function Home() {
   
   const heroSlides = [
     {
-      image: 'https://uwlwfjsdteygsvswsbsd.supabase.co/storage/v1/object/sign/material/aang-irawan-IMDTuQftWK0-unsplash.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wOTU3OGQ5MS1jOTNkLTQyYTItYmFjMy1kMjM1ZTUyY2VhNmMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXRlcmlhbC9hYW5nLWlyYXdhbi1JTURUdVFmdFdLMC11bnNwbGFzaC5qcGciLCJpYXQiOjE3NTUwNTE2OTgsImV4cCI6MTc4NjU4NzY5OH0.tWtB1Gs5ZGfisbPoJ7xkhQL8wucEHnISWe6342w-kHw',
+      image: '/mountin.jpg',
       title: t('hero.welcome'),
       subtitle: t('hero.subtitle')
     },

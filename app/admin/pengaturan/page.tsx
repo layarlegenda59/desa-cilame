@@ -122,7 +122,7 @@ export default function AdminSettings() {
     if (newPassword.length < settings.passwordPolicy.minLength) {
       toast({
         title: "Error",
-        description: `Password minimal ${settings.passwordPolicy.minLength} karakter\`,
+        description: `Password minimal ${settings.passwordPolicy.minLength} karakter`,
         variant: "destructive"
       });
       return;

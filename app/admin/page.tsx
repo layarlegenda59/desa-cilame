@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Lock, User, Shield } from 'lucide-react';
 import Image from 'next/image';
+import { getApiEndpoint } from '@/lib/api-config';
 
 export default function AdminLoginPage() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,17 +36,50 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     setError('');
 
+    console.log('Form submitted with data:', formData);
+
     try {
-      // Simulasi autentikasi - dalam implementasi nyata, ini akan memanggil API
-      if (formData.username === 'admin' && formData.password === 'admin123') {
-        // Set session/token di localStorage atau cookie
-        localStorage.setItem('adminToken', 'authenticated');
-        router.push('/admin/dashboard');
+      // Call backend login API
+      const response = await fetch(`${getApiEndpoint('auth')}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.username.includes('@') ? formData.username : `${formData.username}@desacilame.com`,
+          password: formData.password
+        }),
+      });
+
+      console.log('Response status:', response.status);
+      const data = await response.json();
+      console.log('Response data:', data);
+
+      if (response.ok && data.success) {
+        // Store token in localStorage and cookies
+        localStorage.setItem('adminToken', data.data.access_token);
+        localStorage.setItem('adminUser', JSON.stringify(data.data.user));
+        
+        // Set cookie for middleware authentication
+        document.cookie = `adminToken=${data.data.access_token}; path=/; max-age=86400; SameSite=Lax`;
+        
+        console.log('Login successful, redirecting to dashboard...');
+        
+        // Show success message and set redirecting state
+        setError('');
+        setIsRedirecting(true);
+        
+        // Use setTimeout to ensure state updates are processed
+        setTimeout(() => {
+          // Force redirect using window.location for more reliable redirect
+          window.location.href = '/admin/dashboard';
+        }, 500);
       } else {
-        setError('Username atau password salah');
+        setError(data.message || 'Username atau password salah');
       }
     } catch (err) {
-      setError('Terjadi kesalahan saat login');
+      console.error('Login error:', err);
+      setError('Terjadi kesalahan saat login. Pastikan server backend berjalan.');
     } finally {
       setIsLoading(false);
     }
@@ -72,6 +107,14 @@ export default function AdminLoginPage() {
               <Alert className="mb-4 border-red-200 bg-red-50">
                 <AlertDescription className="text-red-700">
                   {error}
+                </AlertDescription>
+              </Alert>
+            )}
+            
+            {isRedirecting && (
+              <Alert className="mb-4 border-green-200 bg-green-50">
+                <AlertDescription className="text-green-700">
+                  Login berhasil! Mengarahkan ke dashboard...
                 </AlertDescription>
               </Alert>
             )}
@@ -124,10 +167,15 @@ export default function AdminLoginPage() {
               
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || isRedirecting}
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
-                {isLoading ? (
+                {isRedirecting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Mengarahkan ke dashboard...
+                  </>
+                ) : isLoading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                     Memproses...

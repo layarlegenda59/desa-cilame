@@ -6,18 +6,11 @@ const {
   getProfile,
   updateProfile,
   changePassword,
-  refreshToken,
   logout
 } = require('../controllers/userController');
 const { authenticate, optionalAuth } = require('../middleware/auth');
-const { validate } = require('../middleware/validation');
+const { validate, userSchemas } = require('../middleware/validation');
 const { authLimiter } = require('../middleware/security');
-const {
-  userCreateSchema,
-  userLoginSchema,
-  userUpdateSchema,
-  changePasswordSchema
-} = require('../middleware/validation');
 
 const router = express.Router();
 
@@ -31,7 +24,7 @@ router.use(authLimiter);
  * @body    { name, email, username, password, phone }
  */
 router.post('/register', 
-  validate(userCreateSchema),
+  validate(userSchemas.register),
   register
 );
 
@@ -42,19 +35,11 @@ router.post('/register',
  * @body    { email/username, password }
  */
 router.post('/login',
-  validate(userLoginSchema),
+  validate(userSchemas.login),
   login
 );
 
-/**
- * @route   POST /api/auth/refresh
- * @desc    Refresh access token
- * @access  Public
- * @body    { refreshToken }
- */
-router.post('/refresh',
-  refreshToken
-);
+
 
 /**
  * @route   POST /api/auth/logout
@@ -87,7 +72,7 @@ router.get('/profile',
  */
 router.put('/profile',
   authenticate,
-  validate(userUpdateSchema),
+  validate(userSchemas.update),
   updateProfile
 );
 
@@ -100,7 +85,7 @@ router.put('/profile',
  */
 router.put('/change-password',
   authenticate,
-  validate(changePasswordSchema),
+  validate(userSchemas.changePassword),
   changePassword
 );
 

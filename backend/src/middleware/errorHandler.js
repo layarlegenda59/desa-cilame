@@ -74,7 +74,7 @@ const globalErrorHandler = (err, req, res, next) => {
   // Log error
   logger.error(`${err.statusCode} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   
-  if (config.server.nodeEnv === 'development') {
+  if (config.server.env === 'development') {
     sendErrorDev(err, res);
   } else {
     let error = { ...err };

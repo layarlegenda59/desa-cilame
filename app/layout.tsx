@@ -9,6 +9,7 @@ import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('http://localhost:3000'),
   title: 'Desa Cilame - Portal Digital Desa Modern',
   description: 'Portal resmi Desa Cilame dengan layanan digital lengkap untuk masyarakat',
   keywords: 'desa cilame, layanan desa, umkm, transparansi keuangan, pasar tenaga kerja',

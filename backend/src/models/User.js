@@ -211,9 +211,9 @@ class User {
   // Find user by email
   static async findByEmail(email) {
     const result = await query(`
-      SELECT id, username, email, password_hash, full_name, role, is_active, email_verified, last_login, created_at, updated_at
+      SELECT id, username, email, password, full_name, role, status, created_at, updated_at
       FROM users
-      WHERE email = $1
+      WHERE email = ?
     `, [email]);
     
     return result.rows[0] || null;
@@ -378,12 +378,10 @@ class User {
     return { message: 'Password berhasil diubah' };
   }
   
-  // Update last login
+  // Update last login (disabled for SQLite schema)
   static async updateLastLogin(id) {
-    await query(
-      'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1',
-      [id]
-    );
+    // Skip last_login update as column doesn't exist in current schema
+    return;
   }
   
   // Delete user (soft delete)

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -21,142 +21,177 @@ import {
   ExternalLink
 } from 'lucide-react';
 
+// Interface untuk data UMKM dari backend
+interface UMKM {
+  id: string;
+  name?: string;
+  business_name?: string;
+  category: string;
+  owner?: string;
+  owner_name?: string;
+  description: string;
+  address: string;
+  phone: string;
+  email: string;
+  website?: string;
+  socialMedia?: string;
+  social_media?: {
+    instagram?: string;
+    facebook?: string;
+    whatsapp?: string;
+  };
+  establishedYear?: string;
+  established_year?: string;
+  employees?: number;
+  employee_count?: number;
+  status: 'active' | 'inactive' | 'pending';
+  products: string;
+  revenue?: string;
+  annual_revenue?: string;
+  certification?: string;
+  images?: string | string[];
+  createdAt?: string;
+  updatedAt?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export default function UMKMPage() {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('semua');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [umkmData, setUmkmData] = useState<UMKM[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch UMKM data from API
+  const fetchUmkmData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      // Tambahkan timestamp untuk cache busting
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/umkm?t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch UMKM data');
+      }
+      const result = await response.json();
+      const data = result.data || [];
+      // Filter hanya UMKM yang aktif untuk halaman publik
+      const activeUmkm = data.filter((umkm: UMKM) => umkm.status === 'active');
+      setUmkmData(activeUmkm);
+    } catch (error) {
+      console.error('Error fetching UMKM:', error);
+      setError('Gagal memuat data UMKM');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUmkmData();
+  }, []);
 
   const categories = [
       { id: 'semua', label: t('umkm.all_categories') },
-      { id: 'kuliner', label: t('umkm.culinary') },
-      { id: 'fashion', label: t('umkm.fashion') },
-      { id: 'kerajinan', label: t('umkm.handicraft') },
-      { id: 'pertanian', label: t('umkm.agriculture') },
-      { id: 'jasa', label: t('umkm.services') },
-      { id: 'elektronik', label: t('umkm.electronics') },
-      { id: 'kosmetik', label: t('umkm.beauty') }
+      { id: 'Kuliner', label: t('umkm.culinary') },
+      { id: 'Fashion', label: t('umkm.fashion') },
+      { id: 'Kerajinan', label: t('umkm.handicraft') },
+      { id: 'Pertanian', label: t('umkm.agriculture') },
+      { id: 'Jasa', label: t('umkm.services') },
+      { id: 'Elektronik', label: t('umkm.electronics') },
+      { id: 'Kosmetik', label: t('umkm.beauty') },
+      { id: 'Retail', label: 'Retail' },
+      { id: 'Tekstil', label: 'Tekstil' },
+      { id: 'Meubelair', label: 'Meubelair' }
     ];
 
-  const umkmData = [
-    {
-      id: 1,
-      name: 'Warung Mak Ijah',
-      category: 'kuliner',
-      image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      description: 'Gudeg dan masakan Jawa tradisional dengan cita rasa autentik dan bumbu rahasia turun temurun.',
-      location: 'Jl. Raya Cilame No. 45',
-      rating: 4.8,
-      reviewCount: 124,
-      phone: '081234567890',
-      products: [
-        { name: 'Gudeg Komplit', price: 15000, image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Ayam Goreng', price: 12000, image: 'https://images.pexels.com/photos/60616/fried-chicken-chicken-fried-crunchy-60616.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Sate Ayam', price: 20000, image: 'https://images.pexels.com/photos/8879227/pexels-photo-8879227.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
-      ],
-      featured: true,
-      openTime: '06:00 - 22:00'
-    },
-    {
-      id: 2,
-      name: 'Kerajinan Bambu Hani',
-      category: 'kerajinan',
-      image: '/Kerajinan Bambu.jpg',
-      description: 'Kerajinan bambu berkualitas tinggi untuk dekorasi rumah dan keperluan sehari-hari.',
-      location: 'Kampung Bambu, Cilame Utara',
-      rating: 4.9,
-      reviewCount: 87,
-      phone: '081234567891',
-      products: [
-        { name: 'Keranjang Bambu', price: 45000, image: '/Kerajinan Bambu.jpg' },
-        { name: 'Vas Bunga Bambu', price: 35000, image: 'https://images.pexels.com/photos/1029620/pexels-photo-1029620.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Anyaman Dinding', price: 75000, image: 'https://images.pexels.com/photos/6207387/pexels-photo-6207387.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
-      ],
-      featured: true,
-      openTime: '08:00 - 17:00'
-    },
-    {
-      id: 3,
-      name: 'Sayuran Organik Sari',
-      category: 'pertanian',
-      image: 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      description: 'Sayuran organik segar langsung dari kebun sendiri, bebas pestisida dan pupuk kimia.',
-      location: 'Kebun Organik Cilame',
-      rating: 4.7,
-      reviewCount: 156,
-      phone: '081234567892',
-      products: [
-        { name: 'Paket Sayuran 1kg', price: 25000, image: 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Kangkung Organik', price: 8000, image: 'https://images.pexels.com/photos/1256621/pexels-photo-1256621.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Bayam Merah', price: 10000, image: 'https://images.pexels.com/photos/1407862/pexels-photo-1407862.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
-      ],
-      featured: false,
-      openTime: '05:00 - 10:00'
-    },
-    {
-      id: 4,
-      name: 'Fashion Muslim Aini',
-      category: 'fashion',
-      image: 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      description: 'Koleksi hijab dan busana muslim modern dengan bahan berkualitas dan desain terkini.',
-      location: 'Toko Online & Offline Cilame',
-      rating: 4.6,
-      reviewCount: 203,
-      phone: '081234567893',
-      products: [
-        { name: 'Hijab Segi Empat Premium', price: 45000, image: 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Gamis Katun', price: 150000, image: 'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Mukena Traveling', price: 85000, image: 'https://images.pexels.com/photos/6069955/pexels-photo-6069955.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
-      ],
-      featured: false,
-      openTime: '09:00 - 21:00'
-    },
-    {
-      id: 5,
-      name: 'Kopi Arabica Cilame',
-      category: 'kuliner',
-      image: 'https://images.pexels.com/photos/324028/pexels-photo-324028.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      description: 'Kopi arabica premium dari perkebunan lokal Cilame dengan proses roasting tradisional.',
-      location: 'Perkebunan Kopi Cilame',
-      rating: 4.9,
-      reviewCount: 78,
-      phone: '081234567894',
-      products: [
-        { name: 'Kopi Bubuk Arabica 250g', price: 35000, image: 'https://images.pexels.com/photos/324028/pexels-photo-324028.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Kopi Biji Sangrai 500g', price: 55000, image: 'https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Cold Brew Concentrate', price: 25000, image: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
-      ],
-      featured: true,
-      openTime: '07:00 - 19:00'
-    },
-    {
-      id: 6,
-      name: 'Skincare Herbal Nana',
-      category: 'kosmetik',
-      image: 'https://images.pexels.com/photos/7262940/pexels-photo-7262940.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-      description: 'Produk skincare alami dari bahan herbal lokal yang aman untuk semua jenis kulit.',
-      location: 'Online Store Cilame',
-      rating: 4.8,
-      reviewCount: 92,
-      phone: '081234567895',
-      products: [
-        { name: 'Face Serum Herbal', price: 65000, image: 'https://images.pexels.com/photos/7262940/pexels-photo-7262940.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Masker Wajah Alami', price: 35000, image: 'https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' },
-        { name: 'Sabun Madu Propolis', price: 25000, image: 'https://images.pexels.com/photos/4465831/pexels-photo-4465831.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop' }
-      ],
-      featured: false,
-      openTime: '24 Jam (Online)'
+  // Helper function untuk mendapatkan nama UMKM
+  const getUmkmName = (umkm: UMKM) => {
+    return umkm.business_name || umkm.name || 'Nama tidak tersedia';
+  };
+
+  // Helper function untuk mendapatkan nama pemilik
+  const getOwnerName = (umkm: UMKM) => {
+    return umkm.owner_name || umkm.owner || 'Pemilik tidak tersedia';
+  };
+
+  // Helper function untuk mendapatkan tahun berdiri
+  const getEstablishedYear = (umkm: UMKM) => {
+    return umkm.established_year || umkm.establishedYear || 'Tidak diketahui';
+  };
+
+  // Helper function untuk mendapatkan jumlah karyawan
+  const getEmployeeCount = (umkm: UMKM) => {
+    return umkm.employee_count || umkm.employees || 0;
+  };
+
+  // Helper function untuk mendapatkan gambar utama
+  const getMainImage = (umkm: UMKM) => {
+    if (umkm.images) {
+      // Jika images sudah berupa array
+      if (Array.isArray(umkm.images) && umkm.images.length > 0) {
+        return umkm.images[0];
+      }
+      
+      // Jika images berupa string, coba parse sebagai JSON
+      if (typeof umkm.images === 'string') {
+        try {
+          const parsedImages = JSON.parse(umkm.images);
+          if (Array.isArray(parsedImages) && parsedImages.length > 0) {
+            return parsedImages[0];
+          }
+        } catch (e) {
+          // Jika parsing gagal, anggap sebagai URL tunggal
+          if (umkm.images.trim() && umkm.images !== '[]' && umkm.images !== '""') {
+            return umkm.images;
+          }
+        }
+      }
     }
-  ];
+    
+    // Default image berdasarkan kategori
+    const categoryImages = {
+      'Kuliner': 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'kuliner': 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'Perdagangan': 'https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'Kerajinan': 'https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'kerajinan': 'https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'Pertanian': 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'pertanian': 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'Fashion': 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'fashion': 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'Kosmetik': 'https://images.pexels.com/photos/7262940/pexels-photo-7262940.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'Jasa': 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'jasa': 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'
+    };
+    
+    return categoryImages[umkm.category as keyof typeof categoryImages] || 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop';
+  };
+
+  // Helper function untuk mendapatkan produk
+  const getProducts = (umkm: UMKM) => {
+    return umkm.products || 'Produk tidak tersedia';
+  };
+
 
   const filteredUMKM = umkmData.filter(umkm => {
-    const matchesSearch = umkm.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         umkm.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const umkmName = getUmkmName(umkm);
+    const matchesSearch = umkmName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         umkm.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         umkm.products.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'semua' || umkm.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const featuredUMKM = filteredUMKM.filter(umkm => umkm.featured);
+  // Untuk featured UMKM, kita ambil 3 UMKM pertama dari hasil filter
+  const featuredUMKM = filteredUMKM.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -226,13 +261,17 @@ export default function UMKMPage() {
                   <div className="relative">
                     <div className="card-image-container aspect-4-3 relative">
                       <Image
-                        src={umkm.image}
-                        alt={umkm.name}
+                        src={getMainImage(umkm)}
+                        alt={getUmkmName(umkm)}
                         fill
                         className="card-image"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         quality={80}
                         loading="lazy"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop';
+                        }}
                       />
                     </div>
                     <div className="absolute top-4 left-4">
@@ -250,45 +289,53 @@ export default function UMKMPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{umkm.name}</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">{getUmkmName(umkm)}</h3>
                         <p className="text-purple-600 text-sm font-medium">
                           {t(`umkm.${umkm.category}`)}
                         </p>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                        <span className="text-sm font-medium">{umkm.rating}</span>
-                        <span className="text-xs text-gray-500">({umkm.reviewCount})</span>
-                      </div>
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="text-sm font-medium">4.5</span>
+                      <span className="text-xs text-gray-500">(Rating)</span>
+                    </div>
                     </div>
 
                     <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                       {umkm.description}
                     </p>
 
-                    <div className="flex items-center text-sm text-gray-500 mb-4">
+                    <div className="flex items-center text-sm text-gray-500 mb-3">
                       <MapPin className="h-4 w-4 mr-1" />
-                      <span className="truncate">{umkm.location}</span>
+                      <span className="truncate">{umkm.address || 'Alamat tidak tersedia'}</span>
+                    </div>
+
+                    {/* Owner, Established Year, Employees */}
+                    <div className="space-y-1 mb-3">
+                      {(umkm.owner_name || umkm.owner) && (
+                        <div className="flex items-center text-xs text-gray-500">
+                          <span className="font-medium mr-1">Pemilik:</span>
+                          <span>{umkm.owner_name || umkm.owner}</span>
+                        </div>
+                      )}
+                      {(umkm.established_year || umkm.establishedYear) && (
+                        <div className="flex items-center text-xs text-gray-500">
+                          <span className="font-medium mr-1">Berdiri:</span>
+                          <span>{umkm.established_year || umkm.establishedYear}</span>
+                        </div>
+                      )}
+                      {(umkm.employee_count || umkm.employees) && (
+                        <div className="flex items-center text-xs text-gray-500">
+                          <span className="font-medium mr-1">Karyawan:</span>
+                          <span>{umkm.employee_count || umkm.employees} orang</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Product Preview */}
                     <div className="mb-4">
-                      <p className="text-xs text-gray-500 mb-2">{t('umkm.popular_products')}</p>
-                      <div className="flex space-x-2 overflow-x-auto">
-                        {umkm.products.slice(0, 3).map((product, index) => (
-                          <div key={index} className="flex-shrink-0 w-16 h-16 relative rounded-lg overflow-hidden aspect-square">
-                            <Image
-                              src={product.image}
-                              alt={product.name}
-                              fill
-                              className="card-image"
-                              sizes="64px"
-                              quality={75}
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
+                      <p className="text-xs text-gray-500 mb-2">{t('umkm.products')}</p>
+                      <p className="text-sm text-gray-700 line-clamp-2">{getProducts(umkm)}</p>
                     </div>
 
                     <div className="flex space-x-2">
@@ -330,13 +377,17 @@ export default function UMKMPage() {
               <Card key={umkm.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="card-image-container aspect-4-3 relative">
                   <Image
-                    src={umkm.image}
-                    alt={umkm.name}
+                    src={getMainImage(umkm)}
+                    alt={getUmkmName(umkm)}
                     fill
                     className="card-image"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     quality={80}
                     loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop';
+                    }}
                   />
                   <div className="absolute top-4 right-4">
                     <Button size="sm" variant="outline" className="bg-white/90 hover:bg-white">
@@ -348,14 +399,14 @@ export default function UMKMPage() {
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{umkm.name}</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">{getUmkmName(umkm)}</h3>
                       <p className="text-purple-600 text-sm">
                         {t(`umkm.${umkm.category}`)}
                       </p>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm">{umkm.rating}</span>
+                      <span className="text-sm">4.5</span>
                     </div>
                   </div>
 
@@ -365,7 +416,7 @@ export default function UMKMPage() {
 
                   <div className="flex items-center text-sm text-gray-500 mb-4">
                     <MapPin className="h-4 w-4 mr-1" />
-                    <span className="truncate">{umkm.location}</span>
+                    <span className="truncate">{umkm.address || 'Alamat tidak tersedia'}</span>
                   </div>
 
                   <div className="flex space-x-2">
@@ -391,20 +442,24 @@ export default function UMKMPage() {
                   <div className="md:flex">
                     <div className="md:w-1/4 relative card-image-container md:aspect-4-3 aspect-16-9">
                       <Image
-                        src={umkm.image}
-                        alt={umkm.name}
+                        src={getMainImage(umkm)}
+                        alt={getUmkmName(umkm)}
                         fill
                         className="card-image"
                         sizes="(max-width: 768px) 100vw, 25vw"
                         quality={80}
                         loading="lazy"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop';
+                        }}
                       />
                     </div>
                     
                     <div className="md:w-3/4 p-6">
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <h3 className="text-xl font-semibold text-gray-900">{umkm.name}</h3>
+                          <h3 className="text-xl font-semibold text-gray-900">{getUmkmName(umkm)}</h3>
                           <p className="text-purple-600 font-medium">
                             {t(`umkm.${umkm.category}`)}
                           </p>
@@ -412,8 +467,8 @@ export default function UMKMPage() {
                         <div className="flex items-center space-x-2">
                           <div className="flex items-center space-x-1">
                             <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                            <span className="font-medium">{umkm.rating}</span>
-                            <span className="text-sm text-gray-500">({umkm.reviewCount})</span>
+                            <span className="font-medium">4.5</span>
+                            <span className="text-sm text-gray-500">(Rating)</span>
                           </div>
                           <Button size="sm" variant="outline">
                             <Heart className="h-4 w-4" />
@@ -425,11 +480,38 @@ export default function UMKMPage() {
                         {umkm.description}
                       </p>
 
-                      <div className="flex items-center text-sm text-gray-500 mb-4">
+                      <div className="flex items-center text-sm text-gray-500 mb-2">
                         <MapPin className="h-4 w-4 mr-1" />
-                        <span>{umkm.location}</span>
+                        <span>{umkm.address || 'Alamat tidak tersedia'}</span>
                         <span className="mx-2">•</span>
-                        <span>{umkm.openTime}</span>
+                        <span>{umkm.phone || 'Telepon tidak tersedia'}</span>
+                      </div>
+
+                      {/* Owner, Established Year, Employees */}
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
+                        {(umkm.owner_name || umkm.owner) && (
+                          <div className="flex items-center">
+                            <span className="font-medium mr-1">Pemilik:</span>
+                            <span>{umkm.owner_name || umkm.owner}</span>
+                          </div>
+                        )}
+                        {(umkm.established_year || umkm.establishedYear) && (
+                          <div className="flex items-center">
+                            <span className="font-medium mr-1">Berdiri:</span>
+                            <span>{umkm.established_year || umkm.establishedYear}</span>
+                          </div>
+                        )}
+                        {(umkm.employee_count || umkm.employees) && (
+                          <div className="flex items-center">
+                            <span className="font-medium mr-1">Karyawan:</span>
+                            <span>{umkm.employee_count || umkm.employees} orang</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mb-4">
+                        <p className="text-sm text-gray-500 mb-1">{t('umkm.products')}</p>
+                        <p className="text-sm text-gray-700">{getProducts(umkm)}</p>
                       </div>
 
                       <div className="flex items-center justify-between">
@@ -446,7 +528,7 @@ export default function UMKMPage() {
                           </Button>
                         </div>
                         <p className="text-sm text-gray-500">
-                          {umkm.products.length} {t('umkm.products_available')}
+                          {t('umkm.products_available')}
                         </p>
                       </div>
                     </div>

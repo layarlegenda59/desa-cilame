@@ -1,9 +1,21 @@
 const User = require('../models/User');
 const { generateToken } = require('../middleware/auth');
 const { AppError, catchAsync } = require('../middleware/errorHandler');
-const { logger } = require('../config/database');
+const winston = require('winston');
 const bcrypt = require('bcryptjs');
 const config = require('../config/app');
+
+// Configure logger
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console()
+  ]
+});
 
 // Register new user
 const register = catchAsync(async (req, res, next) => {
@@ -67,7 +79,7 @@ const login = catchAsync(async (req, res, next) => {
   }
   
   // Check if user is active
-  if (!user.is_active) {
+  if (user.status !== 'active') {
     return next(new AppError('Akun Anda tidak aktif. Hubungi administrator', 401));
   }
   

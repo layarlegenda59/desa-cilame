@@ -37,7 +37,7 @@ app.use(compression());
 app.use(generalLimiter);
 
 // Request logging
-if (config.NODE_ENV === 'development') {
+if (config.server.env === 'development') {
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined', {
@@ -52,12 +52,12 @@ app.use(requestLogger);
 
 // Body parsing middleware
 app.use(express.json({ 
-  limit: config.MAX_REQUEST_SIZE,
+  limit: config.api.bodyLimit,
   strict: true
 }));
 app.use(express.urlencoded({ 
   extended: true, 
-  limit: config.MAX_REQUEST_SIZE 
+  limit: config.api.bodyLimit 
 }));
 
 // Input sanitization
@@ -69,13 +69,13 @@ app.get('/health', (req, res) => {
     success: true,
     message: 'Server is running',
     timestamp: new Date().toISOString(),
-    environment: config.NODE_ENV,
-    version: config.API_VERSION
+    environment: config.server.env,
+    version: config.server.apiVersion
   });
 });
 
 // API routes
-app.use(`/api/${config.API_VERSION}`, apiRoutes);
+app.use(`/api/${config.server.apiVersion}`, apiRoutes);
 
 // Catch 404 and forward to error handler
 app.use(notFound);
@@ -127,9 +127,9 @@ const startServer = async () => {
     logger.info('Database connected successfully');
     
     // Start HTTP server
-    server = app.listen(config.PORT, () => {
-      logger.info(`Server running on port ${config.PORT} in ${config.NODE_ENV} mode`);
-      logger.info(`API Documentation: http://localhost:${config.PORT}/api/${config.API_VERSION}/info`);
+    server = app.listen(config.server.port, () => {
+      logger.info(`Server running on port ${config.server.port} in ${config.server.env} mode`);
+      logger.info(`API Documentation: http://localhost:${config.server.port}/api/${config.server.apiVersion}/info`);
     });
     
   } catch (error) {

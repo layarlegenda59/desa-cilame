@@ -6,6 +6,11 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/admin')) {
     // Allow access to login page
     if (request.nextUrl.pathname === '/admin') {
+      // If user is already authenticated and trying to access login page, redirect to dashboard
+      const token = request.cookies.get('adminToken')?.value;
+      if (token) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+      }
       return NextResponse.next();
     }
 
@@ -13,8 +18,16 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('adminToken')?.value;
     
     // If no token, redirect to login
-    if (!token || token !== 'authenticated') {
+    if (!token) {
       return NextResponse.redirect(new URL('/admin', request.url));
+    }
+    
+    // Basic token validation (check if it's not empty and has proper JWT structure)
+    if (token.split('.').length !== 3) {
+      // Invalid token format, redirect to login
+      const response = NextResponse.redirect(new URL('/admin', request.url));
+      response.cookies.delete('adminToken');
+      return response;
     }
   }
 

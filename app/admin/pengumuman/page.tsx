@@ -74,12 +74,20 @@ export default function PengumumanManagement() {
   const [deletePengumumanId, setDeletePengumumanId] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    content: string;
+    type: 'info' | 'warning' | 'urgent' | 'success';
+    priority: 'low' | 'medium' | 'high';
+    status: 'active' | 'inactive' | 'expired';
+    expiryDate: string;
+    targetAudience: string;
+  }>({
     title: '',
     content: '',
-    type: 'info' as const,
-    priority: 'medium' as const,
-    status: 'active' as const,
+    type: 'info',
+    priority: 'medium',
+    status: 'active',
     expiryDate: '',
     targetAudience: ''
   });

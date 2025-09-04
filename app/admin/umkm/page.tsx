@@ -51,26 +51,40 @@ import {
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { ImageUpload } from '@/components/ui/image-upload';
 
 interface UMKM {
   id: string;
-  name: string;
+  name?: string;
+  business_name?: string; // Backend field
   category: string;
-  owner: string;
+  owner?: string;
+  owner_name?: string; // Backend field
   description: string;
   address: string;
   phone: string;
   email: string;
   website?: string;
   socialMedia?: string;
-  establishedYear: string;
-  employees: number;
+  social_media?: { // Backend field
+    instagram?: string;
+    facebook?: string;
+    whatsapp?: string;
+  };
+  establishedYear?: string;
+  established_year?: string | number; // Backend field
+  employees?: number;
+  employee_count?: number; // Backend field
   status: 'active' | 'inactive' | 'pending';
   products: string;
   revenue?: string;
+  annual_revenue?: string; // Backend field
   certification?: string;
-  createdAt: string;
-  updatedAt: string;
+  images?: string[] | string; // Can be JSON string or array
+  createdAt?: string;
+  updatedAt?: string;
+  created_at?: string; // Backend field
+  updated_at?: string; // Backend field
 }
 
 export default function UMKMManagement() {
@@ -97,142 +111,87 @@ export default function UMKMManagement() {
     socialMedia: '',
     establishedYear: '',
     employees: 1,
-    status: 'active' as const,
+    status: 'active' as 'active' | 'inactive' | 'pending',
     products: '',
     revenue: '',
-    certification: ''
+    certification: '',
+    images: [] as string[],
+    existingImages: [] as string[]
   });
+  
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
-  // Mock data
+  // Handle file upload
+  const handleFilesChange = (files: File[]) => {
+    setUploadedFiles(files);
+    // Files will be uploaded automatically by ImageUpload component
+    // We'll listen for the upload completion event
+  };
+
+  // Listen for uploaded image URLs
   useEffect(() => {
-    const mockData: UMKM[] = [
-      {
-        id: '1',
-        name: 'Warung Makan Bu Sari',
-        category: 'Kuliner',
-        owner: 'Sari Dewi',
-        description: 'Warung makan tradisional dengan menu khas Sunda yang lezat dan terjangkau.',
-        address: 'Jl. Raya Cilame No. 45',
-        phone: '0812-3456-7890',
-        email: 'warungbusari@gmail.com',
-        website: '',
-        socialMedia: '@warungbusari',
-        establishedYear: '2018',
-        employees: 5,
-        status: 'active',
-        products: 'Nasi gudeg, gado-gado, soto ayam, es cendol',
-        revenue: '10-25 juta/bulan',
-        certification: 'Halal MUI',
-        createdAt: '2024-01-15',
-        updatedAt: '2024-01-15'
-      },
-      {
-        id: '2',
-        name: 'Toko Kelontong Berkah',
-        category: 'Retail',
-        owner: 'Ahmad Fauzi',
-        description: 'Toko kelontong lengkap yang menyediakan kebutuhan sehari-hari warga.',
-        address: 'Jl. Mawar No. 12',
-        phone: '0812-3456-7891',
-        email: 'tokoberkah@gmail.com',
-        website: '',
-        socialMedia: '',
-        establishedYear: '2015',
-        employees: 3,
-        status: 'active',
-        products: 'Sembako, minuman, snack, kebutuhan rumah tangga',
-        revenue: '15-30 juta/bulan',
-        certification: '',
-        createdAt: '2024-01-10',
-        updatedAt: '2024-01-10'
-      },
-      {
-        id: '3',
-        name: 'Kerajinan Bambu Cilame',
-        category: 'Kerajinan',
-        owner: 'Dedi Suryadi',
-        description: 'Usaha kerajinan bambu dengan produk berkualitas tinggi dan ramah lingkungan.',
-        address: 'Jl. Melati No. 78',
-        phone: '0812-3456-7892',
-        email: 'bambucilame@gmail.com',
-        website: 'www.bambucilame.com',
-        socialMedia: '@bambucilame',
-        establishedYear: '2020',
-        employees: 8,
-        status: 'active',
-        products: 'Anyaman bambu, furniture bambu, souvenir',
-        revenue: '20-40 juta/bulan',
-        certification: 'SNI Kerajinan',
-        createdAt: '2024-01-08',
-        updatedAt: '2024-01-08'
-      },
-      {
-        id: '4',
-        name: 'Salon Cantik Indah',
-        category: 'Jasa',
-        owner: 'Indah Permata',
-        description: 'Salon kecantikan dengan layanan lengkap untuk perawatan rambut dan wajah.',
-        address: 'Jl. Anggrek No. 23',
-        phone: '0812-3456-7893',
-        email: 'salonindah@gmail.com',
-        website: '',
-        socialMedia: '@salonindah',
-        establishedYear: '2019',
-        employees: 4,
-        status: 'active',
-        products: 'Potong rambut, creambath, facial, manicure pedicure',
-        revenue: '8-15 juta/bulan',
-        certification: '',
-        createdAt: '2024-01-05',
-        updatedAt: '2024-01-05'
-      },
-      {
-        id: '5',
-        name: 'Tani Organik Cilame',
-        category: 'Pertanian',
-        owner: 'Budi Hartono',
-        description: 'Usaha pertanian organik yang menghasilkan sayuran segar tanpa pestisida.',
-        address: 'Jl. Dahlia No. 56',
-        phone: '0812-3456-7894',
-        email: 'taniorganik@gmail.com',
-        website: '',
-        socialMedia: '',
-        establishedYear: '2021',
-        employees: 6,
-        status: 'pending',
-        products: 'Sayuran organik, buah-buahan, pupuk kompos',
-        revenue: '12-20 juta/bulan',
-        certification: 'Organik Indonesia',
-        createdAt: '2024-01-03',
-        updatedAt: '2024-01-03'
-      },
-      {
-        id: '6',
-        name: 'Konveksi Maju Jaya',
-        category: 'Tekstil',
-        owner: 'Jaya Kusuma',
-        description: 'Usaha konveksi yang memproduksi pakaian berkualitas dengan harga terjangkau.',
-        address: 'Jl. Kenanga No. 89',
-        phone: '0812-3456-7895',
-        email: 'konveksimaju@gmail.com',
-        website: '',
-        socialMedia: '@konveksimaju',
-        establishedYear: '2017',
-        employees: 12,
-        status: 'inactive',
-        products: 'Seragam sekolah, kaos, kemeja, celana',
-        revenue: '25-50 juta/bulan',
-        certification: '',
-        createdAt: '2024-01-01',
-        updatedAt: '2024-01-01'
-      }
-    ];
+    const handleFilesUploaded = (event: CustomEvent) => {
+      const uploadedUrls = event.detail;
+      setFormData(prev => ({
+        ...prev,
+        images: uploadedUrls // Use actual uploaded URLs
+      }));
+    };
+
+    window.addEventListener('filesUploaded', handleFilesUploaded as EventListener);
     
-    setTimeout(() => {
-      setUmkm(mockData);
-      setFilteredUmkm(mockData);
+    return () => {
+      window.removeEventListener('filesUploaded', handleFilesUploaded as EventListener);
+    };
+  }, []);
+
+  const handleRemoveExistingImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      existingImages: prev.existingImages.filter((_, i) => i !== index)
+    }));
+  };
+
+  // Helper function to map category names to IDs
+  const getCategoryId = (categoryName: string): number => {
+    const categoryMap: { [key: string]: number } = {
+      'Kuliner': 1,
+      'Kerajinan': 2,
+      'Retail': 3,
+      'Jasa': 4,
+      'Pertanian': 5,
+      'Tekstil': 6,
+      'Meubelair': 7
+    };
+    return categoryMap[categoryName] || 1;
+  };
+
+  // Load UMKM data from API
+  const fetchUmkm = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/umkm');
+      if (!response.ok) {
+        throw new Error('Failed to fetch UMKM data');
+      }
+      const result = await response.json();
+      const umkmData = result.data || [];
+      setUmkm(umkmData);
+      setFilteredUmkm(umkmData);
+    } catch (error) {
+      console.error('Error fetching UMKM:', error);
+      toast({
+        title: "Error",
+        description: "Gagal memuat data UMKM",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    fetchUmkm();
   }, []);
 
   // Filter UMKM
@@ -241,10 +200,10 @@ export default function UMKMManagement() {
     
     if (searchTerm) {
       filtered = filtered.filter(item => 
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.products.toLowerCase().includes(searchTerm.toLowerCase())
+        item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.owner?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.products?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
@@ -259,73 +218,172 @@ export default function UMKMManagement() {
     setFilteredUmkm(filtered);
   }, [umkm, searchTerm, categoryFilter, statusFilter]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (editingUmkm) {
-      // Update existing UMKM
-      const updatedUmkm = umkm.map(item => 
-        item.id === editingUmkm.id 
-          ? {
-              ...item,
-              ...formData,
-              updatedAt: new Date().toISOString().split('T')[0]
-            }
-          : item
-      );
-      setUmkm(updatedUmkm);
+    try {
+      setIsLoading(true);
+      
+      // Prepare form data for API - map frontend fields to backend schema
+      // Gabungkan existing images dengan images baru
+      const allImages = [...(formData.existingImages || []), ...(formData.images || [])];
+      
+       const submitData = {
+         business_name: formData.name,
+         description: formData.description,
+         owner_name: formData.owner,
+         phone: formData.phone,
+         email: formData.email,
+         address: formData.address,
+         category: formData.category, // Send category name directly
+         website: formData.website,
+         established_year: formData.establishedYear,
+         employee_count: formData.employees,
+         annual_revenue: formData.revenue,
+         certification: formData.certification,
+         status: formData.status || 'pending',
+         products: formData.products || '',
+         images: JSON.stringify(allImages),
+         social_media: JSON.stringify({
+           instagram: formData.socialMedia || '',
+           facebook: '',
+           whatsapp: ''
+         })
+       };
+      
+      if (editingUmkm) {
+        // Update existing UMKM
+        const response = await fetch(`/api/umkm/${editingUmkm.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submitData),
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to update UMKM');
+        }
+        
+        toast({
+          title: "Berhasil",
+          description: "Data UMKM berhasil diperbarui",
+        });
+      } else {
+        // Create new UMKM
+        const response = await fetch('/api/umkm', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submitData),
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to create UMKM');
+        }
+        
+        toast({
+          title: "Berhasil",
+          description: "UMKM baru berhasil ditambahkan",
+        });
+      }
+      
+      // Refresh data
+      await fetchUmkm();
+      resetForm();
+    } catch (error) {
+      console.error('Error saving UMKM:', error);
       toast({
-        title: "Berhasil",
-        description: "Data UMKM berhasil diperbarui",
+        title: "Error",
+        description: "Gagal menyimpan data UMKM",
+        variant: "destructive",
       });
-    } else {
-      // Create new UMKM
-      const newUmkm: UMKM = {
-        id: Date.now().toString(),
-        ...formData,
-        createdAt: new Date().toISOString().split('T')[0],
-        updatedAt: new Date().toISOString().split('T')[0]
-      };
-      setUmkm([newUmkm, ...umkm]);
-      toast({
-        title: "Berhasil",
-        description: "UMKM baru berhasil ditambahkan",
-      });
+    } finally {
+      setIsLoading(false);
     }
-    
-    resetForm();
   };
 
   const handleEdit = (item: UMKM) => {
     setEditingUmkm(item);
-    setFormData({
-      name: item.name,
-      category: item.category,
-      owner: item.owner,
-      description: item.description,
-      address: item.address,
-      phone: item.phone,
-      email: item.email,
-      website: item.website || '',
-      socialMedia: item.socialMedia || '',
-      establishedYear: item.establishedYear,
-      employees: item.employees,
-      status: item.status,
-      products: item.products,
-      revenue: item.revenue || '',
-      certification: item.certification || ''
+    
+    // Parse images if it's a JSON string
+    let parsedImages: string[] = [];
+    if (item.images) {
+      if (typeof item.images === 'string') {
+        try {
+          parsedImages = JSON.parse(item.images);
+        } catch (e) {
+          console.error('Error parsing images:', e);
+          parsedImages = [];
+        }
+      } else if (Array.isArray(item.images)) {
+        parsedImages = item.images;
+      }
+    }
+    
+    // Convert relative URLs to full URLs for existing images
+    const fullUrlImages = parsedImages.map(img => {
+      if (img.startsWith('/uploads/')) {
+        return `http://localhost:5001${img}`;
+      }
+      return img;
     });
+    
+    setFormData({
+      name: item.business_name || item.name || '',
+      category: item.category || '',
+      owner: item.owner_name || item.owner || '',
+      description: item.description || '',
+      address: item.address || '',
+      phone: item.phone || '',
+      email: item.email || '',
+      website: item.website || '',
+      socialMedia: item.social_media?.instagram || item.socialMedia || '',
+      establishedYear: item.established_year?.toString() || item.establishedYear || '',
+      employees: item.employee_count || item.employees || 1,
+      status: (item.status || 'active') as 'active' | 'inactive' | 'pending',
+      products: item.products || '',
+      revenue: item.annual_revenue || item.revenue || '',
+      certification: item.certification || '',
+      images: [],
+      existingImages: fullUrlImages
+    });
+    setUploadedFiles([]);
     setIsDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    setUmkm(umkm.filter(item => item.id !== id));
-    setDeleteUmkmId(null);
-    toast({
-      title: "Berhasil",
-      description: "Data UMKM berhasil dihapus",
-      variant: "destructive"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      setIsLoading(true);
+      
+      const response = await fetch(`/api/umkm/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete UMKM');
+      }
+      
+      toast({
+        title: "Berhasil",
+        description: "Data UMKM berhasil dihapus",
+        variant: "destructive"
+      });
+      
+      // Refresh data
+      await fetchUmkm();
+    } catch (error) {
+      console.error('Error deleting UMKM:', error);
+      toast({
+        title: "Error",
+        description: "Gagal menghapus data UMKM",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+      setDeleteUmkmId(null);
+    }
   };
 
   const resetForm = () => {
@@ -344,8 +402,11 @@ export default function UMKMManagement() {
       status: 'active',
       products: '',
       revenue: '',
-      certification: ''
+      certification: '',
+      images: [],
+      existingImages: []
     });
+    setUploadedFiles([]);
     setEditingUmkm(null);
     setIsDialogOpen(false);
   };
@@ -462,6 +523,7 @@ export default function UMKMManagement() {
                       <SelectItem value="Jasa">Jasa</SelectItem>
                       <SelectItem value="Pertanian">Pertanian</SelectItem>
                       <SelectItem value="Tekstil">Tekstil</SelectItem>
+                      <SelectItem value="Meubelair">Meubelair</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -608,6 +670,23 @@ export default function UMKMManagement() {
                 </div>
               </div>
               
+              {/* Image Upload Section */}
+              <div className="space-y-2">
+                <Label>Gambar UMKM</Label>
+                <ImageUpload
+                    onFilesChange={handleFilesChange}
+                    maxFiles={5}
+                    maxSize={5}
+                    acceptedTypes={['image/jpeg', 'image/jpg', 'image/png', 'image/webp']}
+                    existingImages={formData.existingImages || []}
+                    onRemoveExistingImage={handleRemoveExistingImage}
+                    className="w-full"
+                  />
+                <p className="text-xs text-gray-500">
+                  Upload gambar produk, tempat usaha, atau aktivitas UMKM untuk menarik lebih banyak pelanggan
+                </p>
+              </div>
+              
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={resetForm}>
                   Batal
@@ -656,7 +735,7 @@ export default function UMKMManagement() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Karyawan</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {umkm.reduce((total, u) => total + u.employees, 0)}
+                  {umkm.reduce((total, u) => total + (u.employees || u.employee_count || 0), 0)}
                 </p>
               </div>
             </div>
@@ -707,6 +786,7 @@ export default function UMKMManagement() {
                   <SelectItem value="Jasa">Jasa</SelectItem>
                   <SelectItem value="Pertanian">Pertanian</SelectItem>
                   <SelectItem value="Tekstil">Tekstil</SelectItem>
+                  <SelectItem value="Meubelair">Meubelair</SelectItem>
                 </SelectContent>
               </Select>
               
@@ -745,8 +825,8 @@ export default function UMKMManagement() {
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">{item.name}</h3>
-                    <p className="text-sm text-gray-600 mb-2">Pemilik: {item.owner}</p>
+                    <h3 className="font-semibold text-gray-900 mb-1">{item.business_name || item.name}</h3>
+                    <p className="text-sm text-gray-600 mb-2">Pemilik: {item.owner_name || item.owner}</p>
                     <div className="flex items-center gap-2 mb-3">
                       <Badge className={getCategoryColor(item.category)}>
                         {item.category}

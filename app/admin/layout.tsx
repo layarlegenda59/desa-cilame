@@ -16,7 +16,8 @@ import {
   Menu,
   Bell,
   Search,
-  User
+  User,
+  Type
 } from 'lucide-react';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
@@ -59,6 +60,11 @@ const sidebarItems = [
     icon: Building
   },
   {
+    title: 'Running Text',
+    href: '/admin/running-text',
+    icon: Type
+  },
+  {
     title: 'Pengaturan',
     href: '/admin/settings',
     icon: Settings
@@ -74,7 +80,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   useEffect(() => {
     // Check authentication
     const token = localStorage.getItem('adminToken');
-    if (token === 'authenticated') {
+    if (token && token !== 'null' && token !== 'undefined') {
       setIsAuthenticated(true);
     } else if (pathname !== '/admin') {
       router.push('/admin');
@@ -83,7 +89,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }, [pathname, router]);
 
   const handleLogout = () => {
+    // Clear localStorage
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUser');
+    
+    // Clear cookies
+    document.cookie = 'adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    
+    // Redirect to login
     router.push('/admin');
   };
 

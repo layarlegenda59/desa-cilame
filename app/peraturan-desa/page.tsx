@@ -122,7 +122,7 @@ export default function PeraturanDesaPage() {
     return matchesSearch && matchesYear;
   });
 
-  const availableYears = [...new Set(peraturanDesaData.map(p => p.tahun))].sort((a, b) => b - a);
+  const availableYears = Array.from(new Set(peraturanDesaData.map(p => p.tahun))).sort((a, b) => b - a);
 
   const content = {
     id: {
