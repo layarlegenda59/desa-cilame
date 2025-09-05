@@ -2193,8 +2193,6 @@ const translations: Translations = {
     'ui.trillion': 'Satriliun',
     'ui.button': 'Tombol',
     'ui.p': 'Paragraf',
-    'ui.grid': 'Grid',
-    'ui.list': 'Daptar'
   }
 };
 
