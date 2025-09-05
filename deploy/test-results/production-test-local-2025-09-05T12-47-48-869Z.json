@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-09-05T12:47:44.754Z",
+  "environment": "local",
+  "tests": [
+    {
+      "name": "Server Health Check",
+      "endpoint": "http://localhost:5000/health",
+      "method": "GET",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "passed": true,
+      "responseTime": 1757076464802,
+      "data": {
+        "status": "healthy",
+        "database": "SQLite",
+        "port": 5000,
+        "timestamp": "2025-09-05T12:47:44.796Z"
+      },
+      "error": null
+    },
+    {
+      "name": "API Test Endpoint",
+      "endpoint": "http://localhost:5000/api/test",
+      "method": "GET",
+      "expectedStatus": 200,
+      "actualStatus": 404,
+      "passed": false,
+      "responseTime": 1757076465810,
+      "data": {
+        "success": false,
+        "message": "Endpoint not found"
+      },
+      "error": null
+    },
+    {
+      "name": "Authentication Endpoint",
+      "endpoint": "http://localhost:5000/api/auth/login",
+      "method": "POST",
+      "expectedStatus": "400/401/422",
+      "actualStatus": 500,
+      "passed": false,
+      "responseTime": 1757076466834,
+      "data": {
+        "success": false,
+        "message": "Internal server error"
+      },
+      "error": null
+    },
+    {
+      "name": "Error Handling (404)",
+      "endpoint": "http://localhost:5000/api/nonexistent-endpoint",
+      "method": "GET",
+      "expectedStatus": 404,
+      "actualStatus": 404,
+      "passed": true,
+      "responseTime": 1757076467848,
+      "data": {
+        "success": false,
+        "message": "Endpoint not found"
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "passed": 2,
+    "failed": 2,
+    "successRate": "50.0"
+  }
+}

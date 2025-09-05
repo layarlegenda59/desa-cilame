@@ -308,6 +308,8 @@ const translations: Translations = {
     'transparency.ask_question': 'Ajukan Pertanyaan',
     'transparency.schedule_consultation': 'Jadwalkan Konsultasi',
     'transparency.downloads': 'unduhan',
+    'ui.grid': 'Grid',
+    'ui.list': 'List',
   },
   su: {
     // Navigation
@@ -1777,6 +1779,8 @@ const translations: Translations = {
     'ui.set': 'Set',
     'ui.group': 'Grup',
     'ui.collection': 'Koléksi',
+    'ui.grid': 'Grid',
+    'ui.list': 'Daptar',
     'ui.list_noun': 'Daptar',
     'ui.array': 'Array',
     'ui.table_noun': 'Tabel',

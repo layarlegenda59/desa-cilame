@@ -3,27 +3,28 @@
 // Function to get base URL dynamically
 function getBaseUrl(): string {
   if (typeof window !== 'undefined') {
-    // Client-side: use current domain
-    return window.location.origin;
+    // Client-side: use current domain without port
+    const url = new URL(window.location.origin);
+    return `${url.protocol}//${url.hostname}`;
   }
-  // Server-side: use environment variable or localhost
-  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  // Server-side: use environment variable or localhost without port
+  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost';
 }
 
 // Base URLs for different database servers
 export const API_ENDPOINTS = {
-  main: process.env.NEXT_PUBLIC_MAIN_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/main` : 'https://desacilame.com/api/main'),
-  umkm: process.env.NEXT_PUBLIC_UMKM_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/umkm` : 'https://desacilame.com/api/umkm'),
-  admin: process.env.NEXT_PUBLIC_ADMIN_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/admin` : 'https://desacilame.com/api/admin'),
-  location: process.env.NEXT_PUBLIC_LOCATION_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/location` : 'https://desacilame.com/api/location')
+  main: process.env.NEXT_PUBLIC_MAIN_API_URL || `http://localhost:5000/api`,
+  umkm: process.env.NEXT_PUBLIC_UMKM_API_URL || `http://localhost:5001/api`,
+  admin: process.env.NEXT_PUBLIC_ADMIN_API_URL || `http://localhost:5002/api`,
+  location: process.env.NEXT_PUBLIC_LOCATION_API_URL || `http://localhost:5003/api`
 };
 
 // Health check endpoints
 export const HEALTH_ENDPOINTS = {
-  main: process.env.NEXT_PUBLIC_MAIN_API_URL?.replace('/api', '') || `${getBaseUrl()}:5000`,
-  umkm: process.env.NEXT_PUBLIC_UMKM_API_URL?.replace('/api', '') || `${getBaseUrl()}:5001`,
-  admin: process.env.NEXT_PUBLIC_ADMIN_API_URL?.replace('/api', '') || `${getBaseUrl()}:5002`,
-  location: process.env.NEXT_PUBLIC_LOCATION_API_URL?.replace('/api', '') || `${getBaseUrl()}:5003`
+  main: process.env.NEXT_PUBLIC_MAIN_API_URL?.replace('/api', '') || `http://localhost:5000`,
+  umkm: process.env.NEXT_PUBLIC_UMKM_API_URL?.replace('/api', '') || `http://localhost:5001`,
+  admin: process.env.NEXT_PUBLIC_ADMIN_API_URL?.replace('/api', '') || `http://localhost:5002`,
+  location: process.env.NEXT_PUBLIC_LOCATION_API_URL?.replace('/api', '') || `http://localhost:5003`
 };
 
 // Database server mapping based on data domain

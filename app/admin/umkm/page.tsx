@@ -170,7 +170,22 @@ export default function UMKMManagement() {
   const fetchUmkm = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/umkm');
+      // Import API_ENDPOINTS
+      const { API_ENDPOINTS } = await import('@/lib/api-config');
+      
+      // Add timeout and better error handling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const response = await fetch(`${API_ENDPOINTS.umkm}/umkm`, {
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
         throw new Error('Failed to fetch UMKM data');
       }
@@ -180,11 +195,19 @@ export default function UMKMManagement() {
       setFilteredUmkm(umkmData);
     } catch (error) {
       console.error('Error fetching UMKM:', error);
-      toast({
-        title: "Error",
-        description: "Gagal memuat data UMKM",
-        variant: "destructive",
-      });
+      if (error.name === 'AbortError') {
+        toast({
+          title: "Error",
+          description: "Request timeout - periksa koneksi backend",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Gagal memuat data UMKM",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -251,15 +274,24 @@ export default function UMKMManagement() {
          })
        };
       
+      // Import API_ENDPOINTS
+      const { API_ENDPOINTS } = await import('@/lib/api-config');
+      
       if (editingUmkm) {
         // Update existing UMKM
-        const response = await fetch(`/api/umkm/${editingUmkm.id}`, {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        const response = await fetch(`${API_ENDPOINTS.umkm}/umkm/${editingUmkm.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(submitData),
+          signal: controller.signal,
         });
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
           throw new Error('Failed to update UMKM');
@@ -271,13 +303,19 @@ export default function UMKMManagement() {
         });
       } else {
         // Create new UMKM
-        const response = await fetch('/api/umkm', {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        const response = await fetch(`${API_ENDPOINTS.umkm}/umkm`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(submitData),
+          signal: controller.signal,
         });
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
           throw new Error('Failed to create UMKM');
@@ -294,11 +332,19 @@ export default function UMKMManagement() {
       resetForm();
     } catch (error) {
       console.error('Error saving UMKM:', error);
-      toast({
-        title: "Error",
-        description: "Gagal menyimpan data UMKM",
-        variant: "destructive",
-      });
+      if (error.name === 'AbortError') {
+        toast({
+          title: "Error",
+          description: "Request timeout - periksa koneksi backend",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Gagal menyimpan data UMKM",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -357,9 +403,17 @@ export default function UMKMManagement() {
     try {
       setIsLoading(true);
       
-      const response = await fetch(`/api/umkm/${id}`, {
+      // Import API_ENDPOINTS
+      const { API_ENDPOINTS } = await import('@/lib/api-config');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
+      const response = await fetch(`${API_ENDPOINTS.umkm}/umkm/${id}`, {
         method: 'DELETE',
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
       
       if (!response.ok) {
         throw new Error('Failed to delete UMKM');
@@ -375,11 +429,19 @@ export default function UMKMManagement() {
       await fetchUmkm();
     } catch (error) {
       console.error('Error deleting UMKM:', error);
-      toast({
-        title: "Error",
-        description: "Gagal menghapus data UMKM",
-        variant: "destructive",
-      });
+      if (error.name === 'AbortError') {
+        toast({
+          title: "Error",
+          description: "Request timeout - periksa koneksi backend",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Gagal menghapus data UMKM",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
       setDeleteUmkmId(null);

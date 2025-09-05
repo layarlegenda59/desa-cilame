@@ -49,7 +49,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const queryString = searchParams.toString();
     
-    console.log(`Fetching UMKM data from: ${BACKEND_URL}/api/umkm`);
+    console.log(`BACKEND_URL: ${BACKEND_URL}`);
+    console.log(`Full URL: ${BACKEND_URL}/api/umkm${queryString ? `?${queryString}` : ''}`);
     
     const response = await fetchWithRetry(`${BACKEND_URL}/api/umkm${queryString ? `?${queryString}` : ''}`, {
       method: 'GET',
