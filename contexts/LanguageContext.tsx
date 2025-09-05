@@ -308,8 +308,6 @@ const translations: Translations = {
     'transparency.ask_question': 'Ajukan Pertanyaan',
     'transparency.schedule_consultation': 'Jadwalkan Konsultasi',
     'transparency.downloads': 'unduhan',
-    'ui.grid': 'Grid',
-    'ui.list': 'List',
   },
   su: {
     // Navigation
@@ -693,8 +691,6 @@ const translations: Translations = {
     'ui.email': 'Email',
     'ui.phone': 'Telepon',
     'ui.address': 'Alamat',
-    'ui.grid': 'Grid',
-    'ui.list': 'List',
     'ui.contact': 'Hubungi',
     'ui.name': 'Ngaran',
     'ui.username': 'Ngaran Pamaké',

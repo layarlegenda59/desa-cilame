@@ -195,7 +195,7 @@ export default function UMKMManagement() {
       setFilteredUmkm(umkmData);
     } catch (error) {
       console.error('Error fetching UMKM:', error);
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         toast({
           title: "Error",
           description: "Request timeout - periksa koneksi backend",
@@ -332,7 +332,7 @@ export default function UMKMManagement() {
       resetForm();
     } catch (error) {
       console.error('Error saving UMKM:', error);
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         toast({
           title: "Error",
           description: "Request timeout - periksa koneksi backend",
@@ -429,7 +429,7 @@ export default function UMKMManagement() {
       await fetchUmkm();
     } catch (error) {
       console.error('Error deleting UMKM:', error);
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         toast({
           title: "Error",
           description: "Request timeout - periksa koneksi backend",
