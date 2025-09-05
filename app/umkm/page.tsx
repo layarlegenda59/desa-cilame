@@ -70,25 +70,45 @@ export default function UMKMPage() {
     try {
       setIsLoading(true);
       setError(null);
+      
       // Tambahkan timestamp untuk cache busting
       const timestamp = new Date().getTime();
+      
+      console.log('Fetching UMKM data...');
+      
       const response = await fetch(`/api/umkm?t=${timestamp}`, {
         cache: 'no-store',
         headers: {
           'Cache-Control': 'no-cache'
         }
       });
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch UMKM data');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.details || `HTTP ${response.status}: ${response.statusText}`);
       }
+      
       const result = await response.json();
+      
+      if (!result || !result.data) {
+        throw new Error('Invalid response format: missing data field');
+      }
+      
       const data = result.data || [];
+      
       // Filter hanya UMKM yang aktif untuk halaman publik
       const activeUmkm = data.filter((umkm: UMKM) => umkm.status === 'active');
+      
+      console.log(`Successfully loaded ${activeUmkm.length} active UMKM`);
       setUmkmData(activeUmkm);
+      
     } catch (error) {
       console.error('Error fetching UMKM:', error);
-      setError('Gagal memuat data UMKM');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setError(`Gagal memuat data UMKM: ${errorMessage}`);
+      
+      // Fallback: set empty array to prevent UI crashes
+      setUmkmData([]);
     } finally {
       setIsLoading(false);
     }

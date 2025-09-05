@@ -12,10 +12,10 @@ function getBaseUrl(): string {
 
 // Base URLs for different database servers
 export const API_ENDPOINTS = {
-  main: process.env.NEXT_PUBLIC_MAIN_API_URL || `${getBaseUrl()}:5000/api`,
-  umkm: process.env.NEXT_PUBLIC_UMKM_API_URL || `${getBaseUrl()}:5001/api`,
-  admin: process.env.NEXT_PUBLIC_ADMIN_API_URL || `${getBaseUrl()}:5002/api`,
-  location: process.env.NEXT_PUBLIC_LOCATION_API_URL || `${getBaseUrl()}:5003/api`
+  main: process.env.NEXT_PUBLIC_MAIN_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/main` : 'https://desacilame.com/api/main'),
+  umkm: process.env.NEXT_PUBLIC_UMKM_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/umkm` : 'https://desacilame.com/api/umkm'),
+  admin: process.env.NEXT_PUBLIC_ADMIN_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/admin` : 'https://desacilame.com/api/admin'),
+  location: process.env.NEXT_PUBLIC_LOCATION_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api/location` : 'https://desacilame.com/api/location')
 };
 
 // Health check endpoints

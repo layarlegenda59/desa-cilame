@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-09-05T10:49:40.452Z",
+  "results": [
+    {
+      "success": true,
+      "status": 500,
+      "duration": 384
+    },
+    {
+      "success": true,
+      "status": 404,
+      "duration": 79
+    },
+    {
+      "success": true,
+      "status": 200,
+      "duration": 54
+    },
+    {
+      "success": true,
+      "status": 200,
+      "duration": 23
+    },
+    {
+      "success": true,
+      "status": 200,
+      "duration": 4
+    },
+    {
+      "success": true,
+      "status": 200,
+      "duration": 20
+    },
+    {
+      "success": true,
+      "status": 200,
+      "duration": 21
+    },
+    {
+      "success": true,
+      "status": 200,
+      "duration": 41
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "successful": 8,
+    "failed": 0
+  }
+}
