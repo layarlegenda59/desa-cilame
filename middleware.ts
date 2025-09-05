@@ -2,15 +2,19 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  // Skip middleware for Next.js internal requests
+  if (request.nextUrl.pathname.includes('_next') || 
+      request.nextUrl.pathname.includes('_rsc') ||
+      request.nextUrl.pathname.includes('favicon.ico')) {
+    return NextResponse.next();
+  }
+
   // Check if the request is for admin routes
   if (request.nextUrl.pathname.startsWith('/admin')) {
     // Allow access to login page
     if (request.nextUrl.pathname === '/admin') {
-      // If user is already authenticated and trying to access login page, redirect to dashboard
-      const token = request.cookies.get('adminToken')?.value;
-      if (token) {
-        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-      }
+      // Always allow access to login page without redirect
+      // Let the client-side handle authentication check
       return NextResponse.next();
     }
 

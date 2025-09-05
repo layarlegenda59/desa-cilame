@@ -82,8 +82,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     const token = localStorage.getItem('adminToken');
     if (token && token !== 'null' && token !== 'undefined') {
       setIsAuthenticated(true);
-    } else if (pathname !== '/admin') {
-      router.push('/admin');
+    } else {
+      // If no token and not on login page, redirect to login
+      if (pathname !== '/admin') {
+        router.push('/admin');
+        return;
+      }
     }
     setIsLoading(false);
   }, [pathname, router]);
@@ -108,14 +112,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     );
   }
 
-  // Show login page if not authenticated
-  if (!isAuthenticated && pathname !== '/admin') {
-    return null;
-  }
-
   // Show login page
   if (pathname === '/admin') {
     return children;
+  }
+
+  // Show loading if not authenticated (middleware will handle redirect)
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
   }
 
   const SidebarContent = () => (

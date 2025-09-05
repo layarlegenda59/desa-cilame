@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,6 +21,15 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [isRedirecting, setIsRedirecting] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is already authenticated
+    const token = localStorage.getItem('adminToken');
+    if (token && token !== 'null' && token !== 'undefined') {
+      setIsRedirecting(true);
+      router.push('/admin/dashboard');
+    }
+  }, [router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

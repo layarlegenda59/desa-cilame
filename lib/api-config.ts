@@ -120,7 +120,7 @@ export async function apiRequest(
 }
 
 // Legacy support - for backward compatibility with existing code
-export const BACKEND_URL = process.env.BACKEND_URL || API_ENDPOINTS.main.replace('/api', '');
+export const BACKEND_URL = process.env.BACKEND_URL || API_ENDPOINTS.main.replace('/api/v1', '');
 
 // Export types for TypeScript
 export type DatabaseType = keyof typeof API_ENDPOINTS;
