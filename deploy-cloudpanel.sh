@@ -72,6 +72,9 @@ CORS_ORIGIN=https://$DOMAIN:3003,https://$DOMAIN,http://localhost:3003
 FRONTEND_URL=https://$DOMAIN:3003
 EOF
     
+    # Create logs directory
+    mkdir -p logs
+    
     log "Environment file created"
     
     # Start/restart PM2 services
@@ -81,8 +84,8 @@ EOF
     pm2 stop all || true
     pm2 delete all || true
     
-    # Start with CloudPanel configuration
-    pm2 start ecosystem.cloudpanel.config.js --env production
+    # Start with simplified configuration
+    pm2 start ecosystem.simple.config.js
     
     # Save PM2 configuration
     pm2 save

@@ -4,7 +4,16 @@ This guide helps you deploy the Desa Cilame website on CloudPanel VPS with port 
 
 ## Quick Deployment
 
-### 1. Run the CloudPanel Deployment Script
+### 1. Prepare the Environment
+
+Make sure you're in the project root directory and have the required files:
+```bash
+# Check if you're in the right directory
+ls -la | grep package.json
+ls -la backend/ | grep server-main.js
+```
+
+### 2. Run the CloudPanel Deployment Script
 
 ```bash
 chmod +x deploy-cloudpanel.sh
@@ -12,6 +21,14 @@ chmod +x deploy-cloudpanel.sh
 ```
 
 Replace `your-domain.com` with your actual domain name.
+
+### 3. Verify Installation
+
+After deployment, check if all services are running:
+```bash
+pm2 status
+node test-ports.js
+```
 
 ### 2. Manual Steps (if needed)
 
@@ -28,7 +45,11 @@ Replace `your-domain.com` with your actual domain name.
 
 3. **Start Services with PM2**
    ```bash
-   pm2 start ecosystem.cloudpanel.config.js --env production
+   # Create logs directory first
+   mkdir -p logs
+   
+   # Start with the simple configuration
+   pm2 start ecosystem.simple.config.js
    pm2 save
    ```
 
@@ -110,6 +131,27 @@ node scripts/health-check.js
 
 ## Troubleshooting
 
+### Backend Server Files Not Found
+
+If you see errors like `Script not found: /home/desa-cilame/htdocs/backend/server-main.js`:
+
+1. **Verify file structure**:
+   ```bash
+   pwd  # Make sure you're in project root
+   ls -la backend/server-*.js  # Check server files exist
+   ```
+
+2. **Use the simple ecosystem configuration**:
+   ```bash
+   pm2 delete all  # Stop all existing processes
+   pm2 start ecosystem.simple.config.js
+   ```
+
+3. **Check working directory**:
+   ```bash
+   pm2 logs  # Check if there are path-related errors
+   ```
+
 ### Frontend Can't Connect to Backend
 
 1. **Check if all services are running**:
@@ -154,8 +196,10 @@ node scripts/health-check.js
 - `package.json` - Updated start script for port 3003
 - `.env.production` - Production environment configuration
 - `ecosystem.cloudpanel.config.js` - PM2 configuration for CloudPanel
+- `ecosystem.simple.config.js` - Simplified PM2 configuration (recommended)
 - `deploy-cloudpanel.sh` - Automated deployment script
 - `hostinger-deploy.sh` - Updated for port 3003
+- `test-ports.js` - Port connectivity testing tool
 
 ## Support
 

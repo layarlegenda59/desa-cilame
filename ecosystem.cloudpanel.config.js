@@ -4,7 +4,7 @@ module.exports = {
       name: 'desa-cilame-frontend',
       script: 'npm',
       args: 'run start:production',
-      cwd: '/home/desa-cilame/htdocs',
+      cwd: process.cwd(),
       instances: 'max',
       exec_mode: 'cluster',
       env: {
@@ -18,9 +18,9 @@ module.exports = {
         CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://your-domain.com:3003,https://your-domain.com',
         FRONTEND_URL: process.env.FRONTEND_URL || 'https://your-domain.com:3003'
       },
-      error_file: '/home/desa-cilame/logs/frontend-error.log',
-      out_file: '/home/desa-cilame/logs/frontend-out.log',
-      log_file: '/home/desa-cilame/logs/frontend.log',
+      error_file: './logs/frontend-error.log',
+      out_file: './logs/frontend-out.log',
+      log_file: './logs/frontend.log',
       time: true,
       max_memory_restart: '1G',
       node_args: '--max-old-space-size=1024',
@@ -31,7 +31,7 @@ module.exports = {
     {
       name: 'desa-cilame-main-db',
       script: 'backend/server-main.js',
-      cwd: '/home/desa-cilame/htdocs',
+      cwd: process.cwd(),
       instances: 1,
       exec_mode: 'fork',
       env: {
@@ -44,9 +44,9 @@ module.exports = {
         CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://your-domain.com:3003,https://your-domain.com',
         FRONTEND_URL: process.env.FRONTEND_URL || 'https://your-domain.com:3003'
       },
-      error_file: '/home/desa-cilame/logs/main-db-error.log',
-      out_file: '/home/desa-cilame/logs/main-db-out.log',
-      log_file: '/home/desa-cilame/logs/main-db.log',
+      error_file: './logs/main-db-error.log',
+      out_file: './logs/main-db-out.log',
+      log_file: './logs/main-db.log',
       time: true,
       max_memory_restart: '512M',
       restart_delay: 4000,
@@ -56,7 +56,7 @@ module.exports = {
     {
       name: 'desa-cilame-umkm-db',
       script: 'backend/server-umkm.js',
-      cwd: '/home/desa-cilame/htdocs',
+      cwd: process.cwd(),
       instances: 1,
       exec_mode: 'fork',
       env: {
@@ -69,9 +69,9 @@ module.exports = {
         CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://your-domain.com:3003,https://your-domain.com',
         FRONTEND_URL: process.env.FRONTEND_URL || 'https://your-domain.com:3003'
       },
-      error_file: '/home/desa-cilame/logs/umkm-db-error.log',
-      out_file: '/home/desa-cilame/logs/umkm-db-out.log',
-      log_file: '/home/desa-cilame/logs/umkm-db.log',
+      error_file: './logs/umkm-db-error.log',
+      out_file: './logs/umkm-db-out.log',
+      log_file: './logs/umkm-db.log',
       time: true,
       max_memory_restart: '512M',
       restart_delay: 4000,
@@ -81,7 +81,7 @@ module.exports = {
     {
       name: 'desa-cilame-admin-db',
       script: 'backend/server-admin.js',
-      cwd: '/home/desa-cilame/htdocs',
+      cwd: process.cwd(),
       instances: 1,
       exec_mode: 'fork',
       env: {
@@ -94,9 +94,9 @@ module.exports = {
         CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://your-domain.com:3003,https://your-domain.com',
         FRONTEND_URL: process.env.FRONTEND_URL || 'https://your-domain.com:3003'
       },
-      error_file: '/home/desa-cilame/logs/admin-db-error.log',
-      out_file: '/home/desa-cilame/logs/admin-db-out.log',
-      log_file: '/home/desa-cilame/logs/admin-db.log',
+      error_file: './logs/admin-db-error.log',
+      out_file: './logs/admin-db-out.log',
+      log_file: './logs/admin-db.log',
       time: true,
       max_memory_restart: '512M',
       restart_delay: 4000,
@@ -106,7 +106,7 @@ module.exports = {
     {
       name: 'desa-cilame-location-db',
       script: 'backend/server-location.js',
-      cwd: '/home/desa-cilame/htdocs',
+      cwd: process.cwd(),
       instances: 1,
       exec_mode: 'fork',
       env: {
@@ -119,9 +119,9 @@ module.exports = {
         CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://your-domain.com:3003,https://your-domain.com',
         FRONTEND_URL: process.env.FRONTEND_URL || 'https://your-domain.com:3003'
       },
-      error_file: '/home/desa-cilame/logs/location-db-error.log',
-      out_file: '/home/desa-cilame/logs/location-db-out.log',
-      log_file: '/home/desa-cilame/logs/location-db.log',
+      error_file: './logs/location-db-error.log',
+      out_file: './logs/location-db-out.log',
+      log_file: './logs/location-db.log',
       time: true,
       max_memory_restart: '512M',
       restart_delay: 4000,
