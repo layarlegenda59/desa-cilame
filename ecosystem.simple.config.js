@@ -6,7 +6,10 @@ module.exports = {
       args: 'start',
       env: {
         NODE_ENV: 'production',
-        PORT: 3003
+        PORT: 3003,
+        NEXT_PUBLIC_BASE_URL: 'https://desacilame.com',
+        CORS_ORIGIN: 'https://desacilame.com,https://desacilame.com:3003,http://localhost:3003',
+        FRONTEND_URL: 'https://desacilame.com'
       },
       instances: 1,
       exec_mode: 'fork',
@@ -24,7 +27,9 @@ module.exports = {
       script: './backend/server-main.js',
       env: {
         NODE_ENV: 'production',
-        PORT: 5000
+        PORT: 5000,
+        CORS_ORIGIN: 'https://desacilame.com,https://desacilame.com:3003,http://localhost:3003',
+        FRONTEND_URL: 'https://desacilame.com'
       },
       instances: 1,
       exec_mode: 'fork',
@@ -42,7 +47,9 @@ module.exports = {
       script: './backend/server-umkm.js',
       env: {
         NODE_ENV: 'production',
-        PORT: 5001
+        PORT: 5001,
+        CORS_ORIGIN: 'https://desacilame.com,https://desacilame.com:3003,http://localhost:3003',
+        FRONTEND_URL: 'https://desacilame.com'
       },
       instances: 1,
       exec_mode: 'fork',
@@ -60,7 +67,9 @@ module.exports = {
       script: './backend/server-admin.js',
       env: {
         NODE_ENV: 'production',
-        PORT: 5002
+        PORT: 5002,
+        CORS_ORIGIN: 'https://desacilame.com,https://desacilame.com:3003,http://localhost:3003',
+        FRONTEND_URL: 'https://desacilame.com'
       },
       instances: 1,
       exec_mode: 'fork',
@@ -78,7 +87,9 @@ module.exports = {
       script: './backend/server-location.js',
       env: {
         NODE_ENV: 'production',
-        PORT: 5003
+        PORT: 5003,
+        CORS_ORIGIN: 'https://desacilame.com,https://desacilame.com:3003,http://localhost:3003',
+        FRONTEND_URL: 'https://desacilame.com'
       },
       instances: 1,
       exec_mode: 'fork',

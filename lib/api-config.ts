@@ -5,10 +5,16 @@ function getBaseUrl(): string {
   if (typeof window !== 'undefined') {
     // Client-side: use current domain
     const url = new URL(window.location.origin);
+    
+    // For production deployment on desacilame.com, use the domain without port
+    if (url.hostname === 'desacilame.com' || url.hostname.includes('desacilame.com')) {
+      return `${url.protocol}//desacilame.com`;
+    }
+    
     return `${url.protocol}//${url.hostname}`;
   }
-  // Server-side: use environment variable or localhost
-  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost';
+  // Server-side: use environment variable or production domain
+  return process.env.NEXT_PUBLIC_BASE_URL || 'https://desacilame.com';
 }
 
 // Base URLs for different database servers
