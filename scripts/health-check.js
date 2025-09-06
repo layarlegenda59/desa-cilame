@@ -15,7 +15,7 @@ const os = require('os');
 // Configuration
 const CONFIG = {
     services: [
-        { name: 'Frontend', url: 'http://localhost:3000', timeout: 10000 },
+        { name: 'Frontend', url: process.env.FRONTEND_URL || 'http://localhost:3003', timeout: 10000 },
         { name: 'Main DB Server', url: 'http://localhost:5000/health', timeout: 5000 },
         { name: 'UMKM DB Server', url: 'http://localhost:5001/health', timeout: 5000 },
         { name: 'Admin DB Server', url: 'http://localhost:5002/health', timeout: 5000 },

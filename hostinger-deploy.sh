@@ -169,7 +169,7 @@ DB_USER=$DB_USER
 DB_PASSWORD=$DB_PASSWORD
 
 # Server Configuration
-PORT=3000
+PORT=3003
 MAIN_SERVER_PORT=5000
 UMKM_SERVER_PORT=5001
 ADMIN_SERVER_PORT=5002
@@ -188,7 +188,8 @@ SESSION_SECRET=$(openssl rand -base64 32)
 ENCRYPTION_KEY=$(openssl rand -base64 32)
 
 # CORS
-CORS_ORIGIN=https://$DOMAIN
+CORS_ORIGIN=https://$DOMAIN,https://$DOMAIN:3003
+FRONTEND_URL=https://$DOMAIN:3003
 
 # File Upload
 UPLOAD_DIR=/home/desa-cilame/uploads
@@ -236,7 +237,7 @@ module.exports = {
       exec_mode: 'cluster',
       env: {
         NODE_ENV: 'production',
-        PORT: 3000
+        PORT: 3003
       },
       error_file: '/home/desa-cilame/logs/frontend-error.log',
       out_file: '/home/desa-cilame/logs/frontend-out.log',
@@ -416,7 +417,7 @@ server {
 
     # Frontend application
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:3003;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -480,7 +481,7 @@ setup_firewall() {
     sudo ufw allow 443/tcp
     
     # Allow application ports (only from localhost)
-    sudo ufw allow from 127.0.0.1 to any port 3000
+    sudo ufw allow from 127.0.0.1 to any port 3003
     sudo ufw allow from 127.0.0.1 to any port 5000
     sudo ufw allow from 127.0.0.1 to any port 5001
     sudo ufw allow from 127.0.0.1 to any port 5002
@@ -518,7 +519,7 @@ run_health_checks() {
     sleep 10
     
     # Check frontend
-    if curl -f "http://localhost:3000" > /dev/null 2>&1; then
+    if curl -f "http://localhost:3003" > /dev/null 2>&1; then
         log "✓ Frontend is healthy"
     else
         log_error "✗ Frontend health check failed"
@@ -572,7 +573,7 @@ check_service() {
 }
 
 # Check all services
-check_service "desa-cilame-frontend" "http://localhost:3000"
+check_service "desa-cilame-frontend" "http://localhost:3003"
 check_service "desa-cilame-main-db" "http://localhost:5000/health"
 check_service "desa-cilame-umkm-db" "http://localhost:5001/health"
 check_service "desa-cilame-admin-db" "http://localhost:5002/health"
