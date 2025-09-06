@@ -13,7 +13,7 @@ export default function TentangDesaPage() {
     {
       icon: Users,
       label: 'Total Penduduk',
-      value: '8.247',
+      value: '34.700',
       unit: 'Jiwa',
       color: 'bg-blue-500'
     },

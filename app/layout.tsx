@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Navbar from '@/components/Navbar';
 import ChatBot from '@/components/ChatBot';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -27,15 +28,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="scroll-smooth">
-      <body className={inter.className}>
-        <LanguageProvider>
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <ChatBot />
-          <Toaster />
-        </LanguageProvider>
+      <head>
+        {/* Ensure proper charset and viewport */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Preload critical fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        <ErrorBoundary>
+          <LanguageProvider>
+            <Navbar />
+            <main className="min-h-screen bg-white">
+              {children}
+            </main>
+            <ChatBot />
+            <Toaster />
+          </LanguageProvider>
+        </ErrorBoundary>
         
         {/* Structured Data */}
         <script

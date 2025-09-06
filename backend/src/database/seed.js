@@ -122,7 +122,7 @@ const seedData = {
   villageStatistics: [
     {
       metric_name: 'Jumlah Penduduk',
-      metric_value: 5420,
+      metric_value: 34700,
       metric_unit: 'jiwa',
       category: 'demografi',
       year: 2024,
@@ -130,7 +130,7 @@ const seedData = {
     },
     {
       metric_name: 'Jumlah KK',
-      metric_value: 1355,
+      metric_value: 2156,
       metric_unit: 'KK',
       category: 'demografi',
       year: 2024,

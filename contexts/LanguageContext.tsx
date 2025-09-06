@@ -49,6 +49,7 @@ const translations: Translations = {
     'nav.online_letter_request': 'Ajukan Surat Online',
     'nav.job_market': 'Pasar Kerja',
     'nav.umkm': 'UMKM',
+    'nav.village_regulations': 'Peraturan Desa',
     'nav.contact': 'Kontak',
     'nav.login': 'Login',
     
@@ -308,6 +309,21 @@ const translations: Translations = {
     'transparency.ask_question': 'Ajukan Pertanyaan',
     'transparency.schedule_consultation': 'Jadwalkan Konsultasi',
     'transparency.downloads': 'unduhan',
+    
+    // UI Elements
+    'ui.grid': 'Grid',
+    'ui.list': 'List',
+    
+    // Regulations Page
+    'regulations.title': 'Peraturan Desa',
+    'regulations.subtitle': 'Kumpulan peraturan desa yang berlaku di wilayah Kabupaten Bandung Barat',
+    'regulations.search_placeholder': 'Cari peraturan desa...',
+    'regulations.all_years': 'Semua Tahun',
+    'regulations.download_count': 'kali diunduh',
+    'regulations.no_results': 'Tidak ada peraturan yang ditemukan',
+    'regulations.download_button': 'Unduh',
+    'regulations.showing_results': 'Menampilkan {count} peraturan',
+    'regulations.category_peraturan': 'Peraturan',
   },
   su: {
     // Navigation
@@ -338,6 +354,7 @@ const translations: Translations = {
     'nav.online_letter_request': 'Ajukeun Surat Online',
     'nav.job_market': 'Pasar Pagawéan',
     'nav.umkm': 'UMKM',
+    'nav.village_regulations': 'Aturan Desa',
     'nav.contact': 'Kontak',
     'nav.login': 'Lebet',
     
@@ -1775,8 +1792,19 @@ const translations: Translations = {
     'ui.set': 'Set',
     'ui.group': 'Grup',
     'ui.collection': 'Koléksi',
-    'ui.grid': 'Grid',
-    'ui.list': 'Daptar',
+    'ui.grid': 'Rarangke',
+    'ui.list': 'Urutan',
+    
+    // Regulations Page
+    'regulations.title': 'Peraturan Désa',
+    'regulations.subtitle': 'Kumpulan peraturan désa anu berlaku di wilayah Kabupaten Bandung Barat',
+    'regulations.search_placeholder': 'Pilari aturan desa',
+    'regulations.all_years': 'Sadaya Tahun',
+    'regulations.download_count': 'kali diunduh',
+    'regulations.no_results': 'Tidak ada peraturan yang ditemukan',
+    'regulations.download_button': 'Unduh',
+    'regulations.showing_results': 'Nampilkeun {count} aturan',
+    'regulations.category_peraturan': 'Aturan',
     'ui.list_noun': 'Daptar',
     'ui.array': 'Array',
     'ui.table_noun': 'Tabel',

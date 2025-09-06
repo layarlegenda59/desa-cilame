@@ -332,7 +332,7 @@ export default function LaporanPage() {
                         required
                         value={formData.category}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                       >
                         {categories.map(category => (
                           <option key={category} value={category}>{category}</option>
@@ -349,7 +349,7 @@ export default function LaporanPage() {
                         required
                         value={formData.priority}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                       >
                         {priorities.map(priority => (
                           <option key={priority} value={priority}>{priority}</option>
@@ -447,7 +447,7 @@ export default function LaporanPage() {
                 <select
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                 >
                   <option value="Semua">Semua Kategori</option>
                   {categories.map(category => (

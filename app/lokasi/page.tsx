@@ -20,7 +20,7 @@ export default function LokasiPage() {
     },
     area: '12.45 km²',
     altitude: '650-850 mdpl',
-    population: '8.247 jiwa',
+    population: '34.700 jiwa',
     households: '2.156 KK',
     address: 'Jalan Galudra No. 37, Desa Cilame, Kecamatan Ngamprah, Kabupaten Bandung Barat 40552'
   };
@@ -221,7 +221,7 @@ export default function LokasiPage() {
               </Badge>
               <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
                 <Users className="h-4 w-4 mr-2" />
-                8.247 jiwa
+                34.700 jiwa
               </Badge>
             </div>
           </div>

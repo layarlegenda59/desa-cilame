@@ -35,51 +35,51 @@ export default function StatistikPendudukPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   // Sample statistical data
-  const totalPenduduk = 2847;
+  const totalPenduduk = 34700;
   const pertumbuhanTahunan = 2.3;
 
   const statistikJenisKelamin: StatistikData[] = [
-    { kategori: 'Laki-laki', jumlah: 1456, persentase: 51.1, warna: 'bg-blue-500' },
-    { kategori: 'Perempuan', jumlah: 1391, persentase: 48.9, warna: 'bg-pink-500' }
+    { kategori: 'Laki-laki', jumlah: 17350, persentase: 50.0, warna: 'bg-blue-500' },
+    { kategori: 'Perempuan', jumlah: 17350, persentase: 50.0, warna: 'bg-pink-500' }
   ];
 
   const statistikUsia: StatistikData[] = [
-    { kategori: '0-14 tahun', jumlah: 512, persentase: 18.0, warna: 'bg-green-500' },
-    { kategori: '15-64 tahun', jumlah: 1982, persentase: 69.6, warna: 'bg-blue-500' },
-    { kategori: '65+ tahun', jumlah: 353, persentase: 12.4, warna: 'bg-orange-500' }
+    { kategori: '0-14 tahun', jumlah: 6246, persentase: 18.0, warna: 'bg-green-500' },
+    { kategori: '15-64 tahun', jumlah: 24143, persentase: 69.6, warna: 'bg-blue-500' },
+    { kategori: '65+ tahun', jumlah: 4307, persentase: 12.4, warna: 'bg-orange-500' }
   ];
 
   const statistikPendidikan: StatistikData[] = [
-    { kategori: 'Tidak Sekolah', jumlah: 145, persentase: 5.1, warna: 'bg-red-500' },
-    { kategori: 'SD/Sederajat', jumlah: 856, persentase: 30.1, warna: 'bg-yellow-500' },
-    { kategori: 'SMP/Sederajat', jumlah: 742, persentase: 26.1, warna: 'bg-green-500' },
-    { kategori: 'SMA/Sederajat', jumlah: 689, persentase: 24.2, warna: 'bg-blue-500' },
-    { kategori: 'Diploma/S1+', jumlah: 415, persentase: 14.6, warna: 'bg-purple-500' }
+    { kategori: 'Tidak Sekolah', jumlah: 1770, persentase: 5.1, warna: 'bg-red-500' },
+    { kategori: 'SD/Sederajat', jumlah: 10445, persentase: 30.1, warna: 'bg-yellow-500' },
+    { kategori: 'SMP/Sederajat', jumlah: 9057, persentase: 26.1, warna: 'bg-green-500' },
+    { kategori: 'SMA/Sederajat', jumlah: 8395, persentase: 24.2, warna: 'bg-blue-500' },
+    { kategori: 'Diploma/S1+', jumlah: 5066, persentase: 14.6, warna: 'bg-purple-500' }
   ];
 
   const statistikPekerjaan: StatistikData[] = [
-    { kategori: 'Petani', jumlah: 687, persentase: 24.1, warna: 'bg-green-600' },
-    { kategori: 'Buruh', jumlah: 523, persentase: 18.4, warna: 'bg-orange-600' },
-    { kategori: 'Wiraswasta', jumlah: 412, persentase: 14.5, warna: 'bg-blue-600' },
-    { kategori: 'PNS/TNI/Polri', jumlah: 298, persentase: 10.5, warna: 'bg-indigo-600' },
-    { kategori: 'Ibu Rumah Tangga', jumlah: 456, persentase: 16.0, warna: 'bg-pink-600' },
-    { kategori: 'Pelajar/Mahasiswa', jumlah: 287, persentase: 10.1, warna: 'bg-purple-600' },
-    { kategori: 'Lainnya', jumlah: 184, persentase: 6.5, warna: 'bg-gray-600' }
+    { kategori: 'Petani', jumlah: 8363, persentase: 24.1, warna: 'bg-green-600' },
+    { kategori: 'Buruh', jumlah: 6381, persentase: 18.4, warna: 'bg-orange-600' },
+    { kategori: 'Wiraswasta', jumlah: 5032, persentase: 14.5, warna: 'bg-blue-600' },
+    { kategori: 'PNS/TNI/Polri', jumlah: 3644, persentase: 10.5, warna: 'bg-indigo-600' },
+    { kategori: 'Ibu Rumah Tangga', jumlah: 5552, persentase: 16.0, warna: 'bg-pink-600' },
+    { kategori: 'Pelajar/Mahasiswa', jumlah: 3505, persentase: 10.1, warna: 'bg-purple-600' },
+    { kategori: 'Lainnya', jumlah: 2256, persentase: 6.5, warna: 'bg-gray-600' }
   ];
 
   const statistikPerkawinan: StatistikData[] = [
-    { kategori: 'Belum Kawin', jumlah: 1124, persentase: 39.5, warna: 'bg-blue-500' },
-    { kategori: 'Kawin', jumlah: 1456, persentase: 51.1, warna: 'bg-green-500' },
-    { kategori: 'Cerai Hidup', jumlah: 187, persentase: 6.6, warna: 'bg-yellow-500' },
-    { kategori: 'Cerai Mati', jumlah: 80, persentase: 2.8, warna: 'bg-gray-500' }
+    { kategori: 'Belum Kawin', jumlah: 13717, persentase: 39.5, warna: 'bg-blue-500' },
+    { kategori: 'Kawin', jumlah: 17737, persentase: 51.1, warna: 'bg-green-500' },
+    { kategori: 'Cerai Hidup', jumlah: 2290, persentase: 6.6, warna: 'bg-yellow-500' },
+    { kategori: 'Cerai Mati', jumlah: 972, persentase: 2.8, warna: 'bg-gray-500' }
   ];
 
   const statistikAgama: StatistikData[] = [
-    { kategori: 'Islam', jumlah: 2654, persentase: 93.2, warna: 'bg-green-600' },
-    { kategori: 'Kristen', jumlah: 123, persentase: 4.3, warna: 'bg-blue-600' },
-    { kategori: 'Katolik', jumlah: 45, persentase: 1.6, warna: 'bg-purple-600' },
-    { kategori: 'Hindu', jumlah: 15, persentase: 0.5, warna: 'bg-orange-600' },
-    { kategori: 'Buddha', jumlah: 10, persentase: 0.4, warna: 'bg-yellow-600' }
+    { kategori: 'Islam', jumlah: 32340, persentase: 93.2, warna: 'bg-green-600' },
+    { kategori: 'Kristen', jumlah: 1492, persentase: 4.3, warna: 'bg-blue-600' },
+    { kategori: 'Katolik', jumlah: 555, persentase: 1.6, warna: 'bg-purple-600' },
+    { kategori: 'Hindu', jumlah: 174, persentase: 0.5, warna: 'bg-orange-600' },
+    { kategori: 'Buddha', jumlah: 139, persentase: 0.4, warna: 'bg-yellow-600' }
   ];
 
   const renderStatistikCard = (title: string, data: StatistikData[], icon: React.ReactNode) => (
@@ -145,7 +145,7 @@ export default function StatistikPendudukPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Kepala Keluarga</p>
-                  <p className="text-3xl font-bold text-blue-600">742</p>
+                  <p className="text-3xl font-bold text-blue-600">2,156</p>
                 </div>
                 <Home className="h-12 w-12 text-blue-600" />
               </div>

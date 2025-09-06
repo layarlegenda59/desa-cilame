@@ -40,9 +40,9 @@ const knowledgeBase = {
   'bisnis': 'Dukungan bisnis: pelatihan UMKM, akses modal, perizinan mudah, dan promosi digital. Konsultasi gratis setiap Rabu.',
   
   // Data Desa dan Demografi
-  'penduduk': 'Total penduduk Desa Cilame: 8.247 jiwa dengan 2.156 kepala keluarga. Komposisi: 4.123 laki-laki, 4.124 perempuan.',
-  'populasi': 'Populasi Desa Cilame: 8.247 jiwa, kepadatan 245 jiwa/km². Pertumbuhan penduduk 1.2% per tahun.',
-  'data': 'Data desa terkini: 8.247 jiwa penduduk, 2.156 KK, 45+ UMKM aktif, pertumbuhan ekonomi 12.5%, tingkat kemiskinan 8.3%.',
+  'penduduk': 'Total penduduk Desa Cilame: 34.700 jiwa dengan 2.156 kepala keluarga. Komposisi: 17.350 laki-laki, 17.350 perempuan.',
+  'populasi': 'Populasi Desa Cilame: 34.700 jiwa, kepadatan 1.029 jiwa/km². Pertumbuhan penduduk 1.2% per tahun.',
+  'data': 'Data desa terkini: 34.700 jiwa penduduk, 2.156 KK, 45+ UMKM aktif, pertumbuhan ekonomi 12.5%, tingkat kemiskinan 8.3%.',
   'demografi': 'Demografi: Usia 0-14 tahun (28%), 15-64 tahun (65%), 65+ tahun (7%). Tingkat pendidikan: SD 35%, SMP 25%, SMA 30%, PT 10%.',
   'statistik': 'Statistik desa: Luas wilayah 33.7 km², 12 RW, 48 RT, rasio jenis kelamin 99.9, angka partisipasi sekolah 95.2%.',
   

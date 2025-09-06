@@ -57,7 +57,7 @@ const sendErrorProd = (err, res) => {
     });
   } else {
     // Programming or other unknown error: don't leak error details
-    logger.error('ERROR 💥', err);
+    console.error('ERROR 💥', err);
     
     res.status(500).json({
       success: false,
@@ -72,7 +72,7 @@ const globalErrorHandler = (err, req, res, next) => {
   err.status = err.status || 'error';
   
   // Log error
-  logger.error(`${err.statusCode} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+  console.error(`${err.statusCode} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   
   if (config.server.env === 'development') {
     sendErrorDev(err, res);
@@ -170,21 +170,21 @@ const handleSecurityError = (error) => {
 
 // Process uncaught exceptions
 process.on('uncaughtException', (err) => {
-  logger.error('UNCAUGHT EXCEPTION! 💥 Shutting down...');
-  logger.error(err.name, err.message);
+  console.error('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.error(err.name, err.message);
   process.exit(1);
 });
 
 // Process unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-  logger.error('UNHANDLED REJECTION! 💥 Shutting down...');
-  logger.error(err.name, err.message);
+  console.error('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.error(err.name, err.message);
   process.exit(1);
 });
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  logger.info('👋 SIGTERM RECEIVED. Shutting down gracefully');
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
   process.exit(0);
 });
 

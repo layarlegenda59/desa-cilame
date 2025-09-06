@@ -93,7 +93,7 @@ export default function Navbar() {
     },
     {
       id: 'peraturan',
-      label: language === 'id' ? 'Peraturan Desa' : 'Village Regulations',
+      label: t('nav.village_regulations'),
       href: '/peraturan-desa',
       icon: FileText
     },

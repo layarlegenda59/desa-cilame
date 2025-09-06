@@ -145,6 +145,10 @@ export default function KontakPage() {
     }
   };
 
+  const handleInstagramClick = () => {
+    window.open('https://www.instagram.com/desa.cilame', '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Hero Section */}
@@ -273,7 +277,7 @@ export default function KontakPage() {
                         required
                         value={formData.category}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       >
                         {categories.map(category => (
                           <option key={category} value={category}>{category}</option>
@@ -424,7 +428,12 @@ export default function KontakPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Instagram</h3>
                 <p className="text-gray-600 text-sm mb-4">@desa.cilame</p>
-                <Button variant="outline" size="sm" className="text-pink-600 border-pink-300 hover:bg-pink-50">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-pink-600 border-pink-300 hover:bg-pink-50"
+                  onClick={handleInstagramClick}
+                >
                   <ExternalLink className="h-3 w-3 mr-1" />
                   Kunjungi
                 </Button>
@@ -450,7 +459,7 @@ export default function KontakPage() {
         {/* FAQ */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Pertanyaan Umum</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-start gap-3">
@@ -459,7 +468,7 @@ export default function KontakPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">Berapa lama respon pesan?</h4>
-                    <p className="text-gray-600 text-sm">Kami berusaha merespons dalam 1x24 jam pada hari kerja. Untuk pesan mendesak, hubungi langsung via telepon.</p>
+                    <p className="text-gray-600 text-sm">Kami berusaha merespons dalam 1x24 jam pada hari kerja.</p>
                   </div>
                 </div>
               </CardContent>
@@ -473,7 +482,35 @@ export default function KontakPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">Kapan kantor desa buka?</h4>
-                    <p className="text-gray-600 text-sm">Senin-Jumat: 08:00-16:00, Sabtu: 08:00-12:00. Pelayanan darurat tersedia 24/7 melalui kontak darurat.</p>
+                    <div className="text-gray-600 text-sm space-y-2">
+                      <div className="font-medium text-gray-800 text-sm mb-2">Hari & Waktu Layanan</div>
+                      
+                      <div className="space-y-1">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="font-medium">Senin – Kamis</span>
+                          <span className="text-sm">08.00 – 15.00 WIB</span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="font-medium">Jumat</span>
+                          <span className="text-sm">08.00 – 11.30 WIB</span>
+                        </div>
+                      </div>
+                      
+                      <div className="border-t pt-2 mt-2">
+                        <div className="font-medium text-gray-800 text-sm mb-1">Jam Istirahat</div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span>Senin – Kamis</span>
+                          <span className="text-sm">12.00 – 13.00 WIB</span>
+                        </div>
+                      </div>
+                      
+                      <div className="border-t pt-2 mt-2">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="font-medium text-red-600">Sabtu – Minggu & Hari Libur Nasional</span>
+                          <span className="font-medium text-red-600">Tutup</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -488,20 +525,6 @@ export default function KontakPage() {
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">Bagaimana cara mengajukan keluhan?</h4>
                     <p className="text-gray-600 text-sm">Gunakan formulir di atas dengan kategori 'Keluhan/Saran' atau datang langsung ke kantor desa.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-3">
-                  <div className="bg-orange-100 p-2 rounded-lg">
-                    <Phone className="h-5 w-5 text-orange-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Ada kontak darurat?</h4>
-                    <p className="text-gray-600 text-sm">Ya, hubungi Kepala Desa di 0812-3456-7890 untuk keperluan mendesak di luar jam kerja.</p>
                   </div>
                 </div>
               </CardContent>

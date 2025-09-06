@@ -77,7 +77,25 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Ensure proper box sizing */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Prevent horizontal scrolling */
+  html {
+    overflow-x: hidden;
+  }
+  
+  body {
+    overflow-x: hidden;
+    min-height: 100vh;
   }
 }
 
@@ -221,6 +239,31 @@
   /* Prevent horizontal scroll */
   .container-responsive {
     @apply max-w-full overflow-x-hidden;
+  }
+  
+  /* Improved hero image sizing */
+  .hero-section {
+    @apply relative w-full;
+    height: clamp(500px, 70vh, 800px);
+  }
+  
+  /* Better image loading states */
+  .image-loading {
+    @apply bg-gray-200 animate-pulse;
+  }
+  
+  /* Ensure proper spacing */
+  .section-spacing {
+    @apply py-16;
+  }
+  
+  /* Responsive text sizes */
+  .responsive-title {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+  
+  .responsive-subtitle {
+    @apply text-lg md:text-xl lg:text-2xl;
   }
   
   /* Image loading optimization */

@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -112,7 +114,7 @@ const peraturanDesaData: PeraturanDesa[] = [
 ];
 
 export default function PeraturanDesaPage() {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedYear, setSelectedYear] = useState<string>('all');
 
@@ -124,37 +126,14 @@ export default function PeraturanDesaPage() {
 
   const availableYears = Array.from(new Set(peraturanDesaData.map(p => p.tahun))).sort((a, b) => b - a);
 
-  const content = {
-    id: {
-      title: 'Peraturan Desa',
-      subtitle: 'Kumpulan peraturan desa yang berlaku di wilayah Kabupaten Bandung Barat',
-      searchPlaceholder: 'Cari peraturan desa...',
-      allYears: 'Semua Tahun',
-      downloadCount: 'kali diunduh',
-      noResults: 'Tidak ada peraturan yang ditemukan',
-      downloadButton: 'Unduh'
-    },
-    en: {
-      title: 'Village Regulations',
-      subtitle: 'Collection of village regulations applicable in West Bandung Regency',
-      searchPlaceholder: 'Search village regulations...',
-      allYears: 'All Years',
-      downloadCount: 'downloads',
-      noResults: 'No regulations found',
-      downloadButton: 'Download'
-    }
-  };
-
-  const t = content[language as keyof typeof content];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">{t.title}</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">{t('regulations.title')}</h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            {t.subtitle}
+            {t('regulations.subtitle')}
           </p>
         </div>
 
@@ -164,7 +143,7 @@ export default function PeraturanDesaPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
               type="text"
-              placeholder={t.searchPlaceholder}
+              placeholder={t('regulations.search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -173,9 +152,9 @@ export default function PeraturanDesaPage() {
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
           >
-            <option value="all">{t.allYears}</option>
+            <option value="all">{t('regulations.all_years')}</option>
             {availableYears.map(year => (
               <option key={year} value={year.toString()}>{year}</option>
             ))}
@@ -185,7 +164,7 @@ export default function PeraturanDesaPage() {
         {/* Results Count */}
         <div className="text-center mb-6">
           <p className="text-gray-600">
-            {language === 'id' ? `Menampilkan ${filteredPeraturan.length} peraturan` : `Showing ${filteredPeraturan.length} regulations`}
+            {t('regulations.showing_results').replace('{count}', filteredPeraturan.length.toString())}
           </p>
         </div>
 
@@ -202,7 +181,7 @@ export default function PeraturanDesaPage() {
                     </Badge>
                     <Badge variant="outline">
                       <FileText className="h-3 w-3 mr-1" />
-                      {peraturan.kategori}
+                      {t('regulations.category_peraturan')}
                     </Badge>
                   </div>
                   <CardTitle className="text-lg leading-tight">
@@ -218,11 +197,11 @@ export default function PeraturanDesaPage() {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center text-sm text-gray-500">
                       <Download className="h-4 w-4 mr-1" />
-                      {peraturan.jumlahUnduhan}x {t.downloadCount}
+                      {peraturan.jumlahUnduhan}x {t('regulations.download_count')}
                     </div>
                     <Button size="sm" className="bg-green-600 hover:bg-green-700">
                       <Download className="h-4 w-4 mr-1" />
-                      {t.downloadButton}
+                      {t('regulations.download_button')}
                     </Button>
                   </div>
                 </CardContent>
@@ -232,7 +211,7 @@ export default function PeraturanDesaPage() {
         ) : (
           <div className="text-center py-12">
             <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">{t.noResults}</p>
+            <p className="text-gray-500 text-lg">{t('regulations.no_results')}</p>
           </div>
         )}
       </div>
